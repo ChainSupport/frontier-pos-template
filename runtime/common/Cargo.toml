@@ -1,0 +1,21 @@
+[package]
+name = "common-runtime"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+homepage.workspace = true
+
+[dependencies]
+node-primitives = { path = "../../node/primitives", default-features = false }
+polkadot-sdk = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", features = ["runtime", "tuples-96"], default-features = false }
+
+
+[lints]
+workspace = true
+
+[features]
+default = ["std"]
+
+std = ["node-primitives/std","polkadot-sdk/std"]

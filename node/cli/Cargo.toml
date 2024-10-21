@@ -1,0 +1,145 @@
+[package]
+name = "staging-node-cli"
+version = "3.0.0-dev"
+authors.workspace = true
+description = "Generic Substrate node implementation in Rust."
+build = "build.rs"
+edition.workspace = true
+license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+default-run = "substrate"
+homepage = "https://substrate.io"
+repository.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[package.metadata.wasm-pack.profile.release]
+# `wasm-opt` has some problems on linux, see
+# https://github.com/rustwasm/wasm-pack/issues/781 etc.
+wasm-opt = false
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[badges]
+maintenance = { status = "actively-developed" }
+is-it-maintained-issue-resolution = { repository = "paritytech/polkadot-sdk" }
+is-it-maintained-open-issues = { repository = "paritytech/polkadot-sdk" }
+
+[[bin]]
+name = "substrate"
+path = "bin/main.rs"
+required-features = ["cli"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# third-party dependencies
+array-bytes = "6.1"
+clap = { version = "4.5.3", features = ["derive"], optional = true }
+codec = { package = "parity-scale-codec", version = "3.6.12" }
+serde = { features = ["derive"], workspace = true, default-features = true }
+jsonrpsee = { version = "0.22", features = ["server"] }
+futures = "0.3.30"
+log = { workspace = true, default-features = true }
+rand = "0.8"
+hex-literal = "0.4.1"
+serde_json = { workspace = true, default-features = true }
+
+# The Polkadot-SDK:
+polkadot-sdk = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", features = ["node"] }
+
+# Shared code between the staging node and kitchensink runtime:
+kitchensink-mainnet-runtime = { path = "../../runtime/mainnet", optional = true }
+kitchensink-testnet-runtime = { path = "../../runtime/testnet", optional = true }
+common-runtime = {path = "../../runtime/common"}
+
+
+node-rpc = { path = "../rpc" }
+node-primitives = { path = "../primitives" }
+node-inspect = { package = "staging-node-inspect", path = "../inspect", optional = true }
+
+# Frontier
+fc-api = { workspace = true }
+fc-cli = { workspace = true }
+fc-consensus = { workspace = true }
+fc-db = { workspace = true, features = ["sql"]}
+fc-mapping-sync = { workspace = true, features = ["sql"] }
+fc-rpc = { workspace = true }
+fc-rpc-core = { workspace = true }
+fc-storage = { workspace = true }
+fp-account = { workspace = true }
+fp-dynamic-fee = { workspace = true, features = ["default"] }
+fp-evm = { workspace = true, features = ["default"] }
+fp-rpc = { workspace = true, features = ["default"] }
+#frontier-template-runtime = { workspace = true, features = ["std"] }
+
+[dev-dependencies]
+futures = "0.3.30"
+tempfile = "3.1.0"
+assert_cmd = "2.0.2"
+nix = { version = "0.28.0", features = ["signal"] }
+regex = "1.6.0"
+platforms = "3.0"
+soketto = "0.7.1"
+criterion = { version = "0.5.1", features = ["async_tokio"] }
+tokio = { version = "1.22.0", features = ["macros", "parking_lot", "time"] }
+tokio-util = { version = "0.7.4", features = ["compat"] }
+wait-timeout = "0.2"
+wat = "1.0"
+serde_json = { workspace = true, default-features = true }
+scale-info = { version = "2.11.1", features = ["derive", "serde"] }
+
+# These testing-only dependencies are not exported by the Polkadot-SDK crate:
+#node-testing = { path = "../testing" }
+substrate-cli-test-utils = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
+sc-service-test = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
+#scale-codec = { package = "parity-scale-codec", version = "3.6.4", default-features = false, features = ["derive"] }
+sp-runtime =  { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
+fc-consensus = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0", default-features = false }
+
+
+[build-dependencies]
+clap = { version = "4.5.3", optional = true }
+clap_complete = { version = "4.0.2", optional = true }
+
+node-inspect = { package = "staging-node-inspect", path = "../inspect", optional = true }
+
+polkadot-sdk = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", features = ["frame-benchmarking-cli", "sc-cli", "sc-storage-monitor", "substrate-build-script-utils"], optional = true }
+
+[features]
+default = ["cli"]
+cli = [
+	"clap",
+	"clap_complete",
+	"node-inspect",
+	"polkadot-sdk",
+]
+
+testnet = ["kitchensink-testnet-runtime"]
+mainnet = ["kitchensink-mainnet-runtime"]
+
+runtime-benchmarks = [
+	"kitchensink-mainnet-runtime/runtime-benchmarks",
+	"node-inspect?/runtime-benchmarks",
+	"polkadot-sdk/runtime-benchmarks",
+]
+try-runtime = [
+	"kitchensink-mainnet-runtime/try-runtime",
+	"polkadot-sdk/try-runtime",
+	"substrate-cli-test-utils/try-runtime",
+]
+
+[[bench]]
+name = "transaction_pool"
+harness = false
+
+[[bench]]
+name = "block_production"
+harness = false
+
+[[bench]]
+name = "executor"
+harness = false

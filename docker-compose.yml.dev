@@ -1,0 +1,29 @@
+version: '1.0.0'
+
+services:
+
+  init_alice_node:
+    image: chainsupport/substrate
+    entrypoint: ["bash", "-c", "/usr/local/bin/normal_node_init.sh"]
+    volumes:
+      - ./full_node:/data 
+
+
+  alice_node:
+    image: chainsupport/substrate
+    # , "--rpc-methods", "Unsafe", "--unsafe-rpc-external
+    command: ["--pruning", "archive", "--alice", "--rpc-max-connections", "100", "--rpc-cors", "all"]
+    volumes:
+      - ./full_node:/data 
+    ports:
+      - 30333:30333
+      - 8545:9944 # 兼容以太坊 
+      - 9933:9933
+    networks:
+      - substrate
+
+networks:
+  substrate:
+    driver: bridge
+    
+    
