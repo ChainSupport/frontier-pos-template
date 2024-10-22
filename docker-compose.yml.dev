@@ -3,21 +3,24 @@ version: '1.0.0'
 services:
 
   init_alice_node:
-    image: chainsupport/substrate
+    image: chainsupport/substrate-testnet-node:latest
     entrypoint: ["bash", "-c", "/usr/local/bin/normal_node_init.sh"]
     volumes:
       - ./full_node:/data 
 
+    networks:
+      - substrate
+
 
   alice_node:
-    image: chainsupport/substrate
+    image: chainsupport/substrate-testnet-node:latest
     # , "--rpc-methods", "Unsafe", "--unsafe-rpc-external
-    command: ["--pruning", "archive", "--alice", "--rpc-max-connections", "100", "--rpc-cors", "all"]
+    command: ["--pruning", "archive", "--alice", "--rpc-max-connections", "100", "--rpc-cors", "all", "--rpc-methods", "Unsafe", "--unsafe-rpc-external"]
     volumes:
       - ./full_node:/data 
     ports:
       - 30333:30333
-      - 8545:9944 # 兼容以太坊 
+      - 9944:9944 
       - 9933:9933
     networks:
       - substrate
