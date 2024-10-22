@@ -18,4 +18,8 @@ This is a general public chain development template based on [polkadot-sdk](http
 [https://github.com/blockscout/blockscout](https://github.com/blockscout/blockscout)
 > Note that currently BlockScout does not support displaying transfer records in the balances module, so you should use MetaMask as much as possible for transfers.
 
+## License
+
+This project is licensed under the LICENSE_APACHE2. See the [LICENSE](./LICENSE_APACHE2) file for details.
+
 
