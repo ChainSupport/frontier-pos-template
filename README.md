@@ -6,11 +6,13 @@ This is a general public chain development template based on [polkadot-sdk](http
 [start develop](./docs/start-develop.md)
 
 ## Develop and deploy your ink contract.
-[https://docs.substrate.io/tutorials/smart-contracts/](https://docs.substrate.io/tutorials/smart-contracts/)
+- [ink docs](https://docs.substrate.io/tutorials/smart-contracts/)
+- [deploy tool](https://ui.use.ink/)
 
 > cargo install --force --locked cargo-contract --version 4.1.1
 ## Develop and deploy your Solidity contract.
 [https://hardhat.org/tutorial](https://hardhat.org/tutorial)
+> This template's EVM contract development is 100% the same as Ethereum.
 
 ## Deploy your explorer
 [https://github.com/blockscout/blockscout](https://github.com/blockscout/blockscout)
