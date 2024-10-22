@@ -41,5 +41,5 @@ RUN useradd -m -u 1000 -U -s /bin/base -d /substrate substrate && \
 USER substrate
 EXPOSE 30333 9933 9944 9615
 VOLUME ["/data"]
-ENTRYPOINT ["/usr/local/bin/substrate", "--chain", "staging", "--database", "auto", "--base-path", "/data" ]
+ENTRYPOINT ["/usr/local/bin/substrate", "--database", "auto", "--base-path", "/data" ]
 CMD [ "--help" ]
