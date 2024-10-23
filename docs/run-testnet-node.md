@@ -13,7 +13,7 @@ cargo build --release --features testnet
 ### run
 
 ```
-./substrate --chain staging --database auto
+./substrate  --database auto
 ```
 
 ### **2. docker**

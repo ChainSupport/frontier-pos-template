@@ -4,3 +4,6 @@
 ### build
 - [build node in your local environment](./build-node-local.md)
 - [build node in docker](./build-node-docker.md)
+
+### run devnet node
+[run devnet](./run-devnet-node.md)
