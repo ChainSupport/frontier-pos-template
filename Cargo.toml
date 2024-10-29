@@ -15,7 +15,6 @@ members = [
     "node/primitives",
     "node/rpc", "runtime/common",
     "runtime/mainnet",
-#    "utils/subkey",
 ]
 
 #default-members = [
