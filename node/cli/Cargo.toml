@@ -74,6 +74,7 @@ fp-account = { workspace = true }
 fp-dynamic-fee = { workspace = true, features = ["default"] }
 fp-evm = { workspace = true, features = ["default"] }
 fp-rpc = { workspace = true, features = ["default"] }
+babe-consensus-data-provider = {path = "../../client/babe-consensus-data-provider"}
 #frontier-template-runtime = { workspace = true, features = ["std"] }
 
 [dev-dependencies]
@@ -100,14 +101,13 @@ sc-service-test = { git="https://github.com/paritytech/polkadot-sdk", branch="re
 sp-runtime =  { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 fc-consensus = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0", default-features = false }
 
-
 [build-dependencies]
 clap = { version = "4.5.3", optional = true }
 clap_complete = { version = "4.0.2", optional = true }
 
 node-inspect = { package = "staging-node-inspect", path = "../inspect", optional = true }
-
 polkadot-sdk = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", features = ["frame-benchmarking-cli", "sc-cli", "sc-storage-monitor", "substrate-build-script-utils"], optional = true }
+
 
 [features]
 default = ["cli"]

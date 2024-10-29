@@ -16852,6 +16852,7 @@ version = "3.0.0-dev"
 dependencies = [
  "array-bytes",
  "assert_cmd",
+ "babe-consensus-data-provider",
  "clap",
  "clap_complete",
  "common-runtime",

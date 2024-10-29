@@ -46,6 +46,7 @@ use sc_consensus_babe::BabeWorkerHandle;
 use sc_consensus_beefy::communication::notification::{
     BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
+use fc_rpc::pending::ConsensusDataProvider;
 use sc_consensus_grandpa::GrandpaApi;
 use sc_consensus_grandpa::{
     FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
@@ -153,6 +154,8 @@ pub fn create_full<C, P, SC, B, AuthorityId, A, CT, CIDP>(
             fc_mapping_sync::EthereumBlockNotification<Block>,
         >,
     >,
+    pending_consenus_data_provider: Box<dyn ConsensusDataProvider<Block>>,
+    
 ) -> Result<RpcModule<()>, Box<dyn std::error::Error + Send + Sync>>
 where
     // Block: BlockT,
@@ -310,6 +313,7 @@ where
         eth,
         subscription_task_executor,
         pubsub_notification_sinks,
+        pending_consenus_data_provider,
     )?;
 
     Ok(io)

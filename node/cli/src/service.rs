@@ -31,6 +31,7 @@ use polkadot_sdk::{
     sc_consensus_beefy as beefy, sc_consensus_grandpa as grandpa,
     sp_consensus_beefy as beefy_primitives, *,
 };
+use babe_consensus_data_provider::BabeConsensusDataProvider;
 use sc_network::Litep2pNetworkBackend;
 use sp_core::U256;
 // use sp_runtime::traits::Block as BlockT;
@@ -714,11 +715,14 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
                     // mixnet_api: mixnet_api.as_ref().cloned(),
                     eth: eth_deps,
                 };
+                let pending_consenus_data_provider = Box::new(BabeConsensusDataProvider::new(client.clone(), keystore.clone()));
 
                 node_rpc::create_full(
                     deps,
                     subscription_executor,
                     pubsub_notification_sinks1.clone(),
+                    pending_consenus_data_provider
+                    
                 )
                 .map_err(Into::into)
             };

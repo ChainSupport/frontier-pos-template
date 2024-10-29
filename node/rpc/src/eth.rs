@@ -8,6 +8,7 @@ use sc_client_api::{
     client::BlockchainEvents,
     AuxStore, UsageProvider,
 };
+use fc_rpc::pending::ConsensusDataProvider;
 use sc_network::service::traits::NetworkService;
 use sc_network_sync::SyncingService;
 use sc_rpc::SubscriptionTaskExecutor;
@@ -77,6 +78,7 @@ pub fn create_eth<C, BE, P, A, CT, CIDP, EC>(
             fc_mapping_sync::EthereumBlockNotification<Block>,
         >,
     >,
+    pending_consenus_data_provider: Box<dyn ConsensusDataProvider<Block>>,
 ) -> Result<RpcModule<()>, Box<dyn std::error::Error + Send + Sync>>
 where
     // B: BlockT,
@@ -144,8 +146,7 @@ where
             execute_gas_limit_multiplier,
             forced_parent_hashes,
             pending_create_inherent_data_providers,
-            // Some(Box::new(AuraConsensusDataProvider::new(client.clone()))),
-            None,
+            Some(pending_consenus_data_provider),
         )
         .replace_config::<EC>()
         .into_rpc(),
