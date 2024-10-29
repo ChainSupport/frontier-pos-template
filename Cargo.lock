@@ -997,8 +997,10 @@ version = "0.1.0"
 dependencies = [
  "fc-rpc",
  "sc-client-api",
+ "sc-consensus-babe",
  "sc-service",
  "scale-info",
+ "schnorrkel 0.11.4",
  "sp-api",
  "sp-application-crypto",
  "sp-consensus-babe",
