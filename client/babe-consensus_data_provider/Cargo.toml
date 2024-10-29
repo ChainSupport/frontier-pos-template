@@ -19,8 +19,12 @@ sp-consensus-babe = { features = ["serde"], git="https://github.com/paritytech/p
 scale-info = { workspace = true, branch="release-polkadot-v1.13.0" }
 sc-service = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sc-client-api = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
-
+sc-consensus-babe = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sp-inherents = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", features = ["default"] }
+# Other
+schnorrkel = { version = "0.11.4", default-features = false, features = [
+    "preaudit_deprecated",
+] }
 
 fc-rpc = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0", features = [
     "rpc-binary-search-estimate",
