@@ -39,7 +39,8 @@ node-primitives = { path = "../../node/primitives", default-features = false }
 # Example pallets that are not published:
 pallet-example-mbm = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false }
 pallet-example-tasks = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false }
-pallet-balances = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false, features = ["insecure_zero_ed"] }
+# pallet-balances = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false, features = ["insecure_zero_ed"] }
+pallet-balances = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false}
 
 # Frontier
 fp-account = { workspace = true, features = ["serde"] }
@@ -61,10 +62,11 @@ pallet-evm-precompile-simple = { workspace = true }
 substrate-wasm-builder = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", optional = true }
 
 [features]
-default = ["std", "insecure_zero_ed"]
-insecure_zero_ed = [
-	"pallet-balances/insecure_zero_ed",
-]
+default = ["std"]
+# default = ["std", "insecure_zero_ed"]
+# insecure_zero_ed = [
+# 	"pallet-balances/insecure_zero_ed",
+# ]
 with-tracing = ["polkadot-sdk/with-tracing"]
 std = [
 	"codec/std",
