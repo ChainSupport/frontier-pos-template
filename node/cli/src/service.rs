@@ -651,8 +651,8 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
             Ok((slot, timestamp, dynamic_fee))
         };
 
-        let network0 = network.clone();
-        let role1 = config.role.clone().is_authority().clone();
+        let network = network.clone();
+        let is_authority = config.role.clone().is_authority().clone();
         let sync_service0 = sync_service.clone();
         let rpc_extensions_builder =
             move |deny_unsafe, subscription_executor: node_rpc::SubscriptionTaskExecutor| {
@@ -664,9 +664,9 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
                     pool: pool.clone(),
                     graph: pool.pool().clone(),
                     converter: Some(TransactionConverter::<Block>::default()),
-                    is_authority: role1.into(),
+                    is_authority: is_authority,
                     enable_dev_signer,
-                    network: network0.clone(),
+                    network: network.clone(),
                     sync: sync_service0.clone(),
                     frontier_backend: match &*frontier_backend1.clone() {
                         fc_db::Backend::KeyValue(b) => b.clone(),
