@@ -1,3 +1,4 @@
 # .rustfmt.toml
 
 imports_granularity = "crate"
+unused_imports = "preserve"
