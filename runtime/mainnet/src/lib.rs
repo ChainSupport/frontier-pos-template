@@ -66,12 +66,12 @@ use frame_system::{
 };
 use pallet_evm::{Account as EVMAccount, FeeCalculator, Runner};
 use sp_core::H256;
-use sp_runtime::traits::UniqueSaturatedInto;
-use sp_runtime::MultiAddress;
+use sp_runtime::{traits::UniqueSaturatedInto, MultiAddress};
 
 use fp_evm::weight_per_gas;
-pub use node_primitives::{AccountId, Signature};
-pub use node_primitives::{AccountIndex, Balance, BlockNumber, Hash, Moment, Nonce};
+pub use node_primitives::{
+    AccountId, AccountIndex, Balance, BlockNumber, Hash, Moment, Nonce, Signature,
+};
 use pallet_asset_conversion::{AccountIdConverter, Ascending, Chain, WithFirstAsset};
 use pallet_broker::{CoreAssignment, CoreIndex, CoretimeInterface, PartsOf57600};
 use pallet_election_provider_multi_phase::{GeometricDepositBase, SolutionAccuracyOf};

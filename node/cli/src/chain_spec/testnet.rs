@@ -20,10 +20,9 @@
 
 use hex_literal::hex;
 // todo
-use common_runtime::{AccountId};
+use common_runtime::AccountId;
 use kitchensink_testnet_runtime::{
-    constants::currency::*, wasm_binary_unwrap, Block, MaxNominations, SessionKeys,
-    StakerStatus,
+    constants::currency::*, wasm_binary_unwrap, Block, MaxNominations, SessionKeys, StakerStatus,
 };
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
 use polkadot_sdk::*;
@@ -35,9 +34,7 @@ use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_consensus_babe::AuthorityId as BabeId;
 use sp_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
-use sp_core::ecdsa;
-use sp_core::{crypto::UncheckedInto, sr25519, Pair, Public};
-use sp_core::{H160, U256};
+use sp_core::{crypto::UncheckedInto, ecdsa, sr25519, Pair, Public, H160, U256};
 use sp_mixnet::types::AuthorityId as MixnetId;
 use sp_runtime::{
     traits::{IdentifyAccount, Verify},
@@ -96,7 +93,6 @@ fn session_keys(
         beefy,
     }
 }
-
 
 /// Helper function to generate a crypto pair from seed.
 pub fn get_from_seed<TPublic: Public>(seed: &str) -> <TPublic::Pair as Pair>::Public {
@@ -305,11 +301,10 @@ pub fn testnet_genesis(
 
 fn development_config_genesis_json() -> serde_json::Value {
     // BALTATHAR
-    let extra_endowed_accounts_balance = vec![
-        (AccountId::from(hex!("3Cd0A705a2DC65e5b1E1205896BaA2be8A07c6e0")),
+    let extra_endowed_accounts_balance = vec![(
+        AccountId::from(hex!("3Cd0A705a2DC65e5b1E1205896BaA2be8A07c6e0")),
         1000_000_000 * DOLLARS,
-        ),
-    ];
+    )];
     testnet_genesis(
         vec![authority_keys_from_alice()], // vec![AccountId::from(hex!("d43593c715fdd31c61141abd04a99fd6822c8558"))],
         vec![],
@@ -340,4 +335,3 @@ pub fn development_config() -> ChainSpec {
         .with_genesis_config_patch(development_config_genesis_json())
         .build()
 }
-

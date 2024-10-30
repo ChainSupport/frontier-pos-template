@@ -49,4 +49,3 @@ pub mod client;
 pub use cli::*;
 #[cfg(feature = "cli")]
 pub use command::*;
-

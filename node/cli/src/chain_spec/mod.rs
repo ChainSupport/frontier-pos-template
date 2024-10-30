@@ -1,4 +1,4 @@
-#[cfg(feature="mainnet")]
+#[cfg(feature = "mainnet")]
 pub mod mainnet;
-#[cfg(feature="testnet")]
+#[cfg(feature = "testnet")]
 pub mod testnet;

@@ -75,6 +75,8 @@ fp-dynamic-fee = { workspace = true, features = ["default"] }
 fp-evm = { workspace = true, features = ["default"] }
 fp-rpc = { workspace = true, features = ["default"] }
 babe-consensus-data-provider = {path = "../../client/babe-consensus-data-provider"}
+# fc-rpc-debug = { workspace = true }
+# fc-rpc-trace = { workspace = true }
 #frontier-template-runtime = { workspace = true, features = ["std"] }
 
 [dev-dependencies]

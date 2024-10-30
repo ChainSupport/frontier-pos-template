@@ -10,15 +10,11 @@ use sc_service::{
 use schnorrkel::PublicKey;
 use sp_api::{ApiExt, ApiRef, Core, ProvideRuntimeApi};
 use sp_application_crypto::{AppCrypto, ByteArray};
-use sp_consensus_babe::digests::PreDigest;
-use sp_consensus_babe::inherents::BabeInherentData;
-use sp_consensus_babe::Epoch;
 use sp_consensus_babe::{
-    make_vrf_transcript, AuthorityId, AuthorityPair, BabeApi, Randomness, Slot, VrfSignature,
+    digests::PreDigest, inherents::BabeInherentData, make_vrf_transcript, AllowedSlots,
+    AuthorityId, AuthorityPair, BabeApi, BabeConfiguration, Epoch, Randomness, Slot, VrfSignature,
 };
-use sp_consensus_babe::{AllowedSlots, BabeConfiguration};
-use sp_core::Encode;
-use sp_core::H256;
+use sp_core::{Encode, H256};
 use sp_inherents::{CreateInherentDataProviders, InherentData, InherentDataProvider};
 use sp_keystore::{Keystore, KeystorePtr};
 use sp_runtime::{
@@ -26,8 +22,7 @@ use sp_runtime::{
     traits::{Block as BlockT, Header as HeaderT, One},
     TransactionOutcome,
 };
-use std::marker::PhantomData;
-use std::sync::Arc;
+use std::{marker::PhantomData, sync::Arc};
 pub struct BabeConsensusDataProvider<B, C> {
     client: Arc<C>,
     keystore: Arc<dyn Keystore>,

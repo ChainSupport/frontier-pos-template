@@ -24,12 +24,12 @@ use crate::{
     service::{new_partial, FullClient},
     Cli, Subcommand,
 };
-use frame_benchmarking_cli::*;
 use common_runtime::opaque::Block;
+use frame_benchmarking_cli::*;
 
-#[cfg(feature="mainnet")]
+#[cfg(feature = "mainnet")]
 use kitchensink_mainnet_runtime::{ExistentialDeposit, RuntimeApi};
-#[cfg(feature="testnet")]
+#[cfg(feature = "testnet")]
 use kitchensink_testnet_runtime::{ExistentialDeposit, RuntimeApi};
 
 use sc_network::{Litep2pNetworkBackend, NetworkBackend};
@@ -67,7 +67,7 @@ impl SubstrateCli for Cli {
     }
 
     fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
-        #[cfg(feature="mainnet")]
+        #[cfg(feature = "mainnet")]
         let spec = match id {
             "" | "mainnet" => Box::new(chain_spec::mainnet::development_config()),
             path => Box::new(chain_spec::mainnet::ChainSpec::from_json_file(
@@ -75,7 +75,7 @@ impl SubstrateCli for Cli {
             )?),
         };
 
-        #[cfg(feature="testnet")]
+        #[cfg(feature = "testnet")]
         let spec = match id {
             "dev" | "testnet" | "" => Box::new(chain_spec::testnet::development_config()),
             path => Box::new(chain_spec::testnet::ChainSpec::from_json_file(
@@ -84,7 +84,6 @@ impl SubstrateCli for Cli {
         };
         Ok(spec)
     }
-
 }
 
 /// Parse command line arguments into service configuration.

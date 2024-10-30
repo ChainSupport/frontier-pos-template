@@ -70,6 +70,8 @@ fc-db = { git="https://github.com/ChainSupport/frontier.git", branch="release-po
 fc-mapping-sync = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0", default-features = false }
 fc-rpc = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0", default-features = false }
 fc-rpc-core = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0" }
+# fc-rpc-debug = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0" }
+# fc-rpc-trace = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0" }
 fc-rpc-v2 = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0" }
 fc-rpc-v2-api = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0" }
 fc-rpc-v2-types = { git="https://github.com/ChainSupport/frontier.git", branch="release-polkadot-v1.13.0" }

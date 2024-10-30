@@ -37,19 +37,17 @@ use sp_inherents::CreateInherentDataProviders;
 use std::sync::Arc;
 // use sc_consensus_grandpa_rpc::finality::RpcFinalityProofProvider;
 
-use common_runtime::opaque::Block;
-use common_runtime::{AccountId, Balance, BlockNumber, Hash, Nonce};
+use common_runtime::{opaque::Block, AccountId, Balance, BlockNumber, Hash, Nonce};
+use fc_rpc::pending::ConsensusDataProvider;
 use jsonrpsee::RpcModule;
-use sc_client_api::AuxStore;
-use sc_client_api::{backend::StorageProvider, client::BlockchainEvents, UsageProvider};
+use sc_client_api::{backend::StorageProvider, client::BlockchainEvents, AuxStore, UsageProvider};
 use sc_consensus_babe::BabeWorkerHandle;
 use sc_consensus_beefy::communication::notification::{
     BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
-use fc_rpc::pending::ConsensusDataProvider;
-use sc_consensus_grandpa::GrandpaApi;
 use sc_consensus_grandpa::{
-    FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
+    FinalityProofProvider, GrandpaApi, GrandpaJustificationStream, SharedAuthoritySet,
+    SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
 pub use sc_rpc_api::DenyUnsafe;
@@ -58,17 +56,17 @@ use sc_transaction_pool_api::TransactionPool;
 use sp_api::{CallApiAt, ProvideRuntimeApi};
 use sp_application_crypto::RuntimeAppPublic;
 use sp_block_builder::BlockBuilder;
-use sp_blockchain::Backend as BlockchainBackend;
-use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
+use sp_blockchain::{
+    Backend as BlockchainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata,
+};
 use sp_consensus::SelectChain;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_consensus_babe::BabeApi;
 use sp_consensus_beefy::AuthorityIdBound;
 use sp_keystore::KeystorePtr;
-use sp_runtime::traits::Block as BlockT;
-use sp_runtime::traits::HashingFor;
-use sp_runtime::traits::NumberFor;
-use sp_runtime::traits::{Hash as HashT, Header as HeaderT};
+use sp_runtime::traits::{
+    Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, NumberFor,
+};
 // use sc_rpc_api::chain::ChainApi;
 // use sc_consensus_grandpa_rpc::GrandpaApi;
 // use sc_transaction_pool::{ChainApi, Pool};
@@ -155,7 +153,6 @@ pub fn create_full<C, P, SC, B, AuthorityId, A, CT, CIDP>(
         >,
     >,
     pending_consenus_data_provider: Box<dyn ConsensusDataProvider<Block>>,
-    
 ) -> Result<RpcModule<()>, Box<dyn std::error::Error + Send + Sync>>
 where
     // Block: BlockT,

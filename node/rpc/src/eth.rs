@@ -3,12 +3,12 @@ use std::{collections::BTreeMap, sync::Arc};
 use jsonrpsee::RpcModule;
 // Substrate
 use common_runtime::opaque::Block;
+use fc_rpc::pending::ConsensusDataProvider;
 use sc_client_api::{
     backend::{Backend, StorageProvider},
     client::BlockchainEvents,
     AuxStore, UsageProvider,
 };
-use fc_rpc::pending::ConsensusDataProvider;
 use sc_network::service::traits::NetworkService;
 use sc_network_sync::SyncingService;
 use sc_rpc::SubscriptionTaskExecutor;
