@@ -20,6 +20,7 @@
 
 #![allow(unused_imports)]
 #![allow(unused_variables)]
+#![allow(clippy::clone_on_copy)]
 
 use hex_literal::hex;
 // todo

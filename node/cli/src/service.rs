@@ -20,6 +20,7 @@
 #![allow(unused_imports)]
 #![allow(missing_docs)]  
 #![allow(unused_variables)]
+#![allow(clippy::clone_on_copy)]
 
 //! Service implementation. Specialized wrapper over substrate service.
 

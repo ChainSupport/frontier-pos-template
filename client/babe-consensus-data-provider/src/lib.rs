@@ -1,5 +1,6 @@
 #![allow(unused_imports)]
-#![allow(missing_docs)]     
+#![allow(missing_docs)]   
+#![allow(clippy::clone_on_copy)]  
 use fc_rpc::pending::ConsensusDataProvider;
 use sc_client_api::{
     backend::{AuxStore, Backend, StorageProvider},
