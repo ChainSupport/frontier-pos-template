@@ -16,7 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#![warn(unused_extern_crates)]
+#![allow(unused_extern_crates)]
+#![allow(unused_imports)]
+#![allow(missing_docs)]  
+#![allow(unused_variables)]
 
 //! Service implementation. Specialized wrapper over substrate service.
 
@@ -325,7 +328,6 @@ where
         })?;
 
     let import_setup = (block_import, grandpa_link, babe_link, beefy_voter_links);
-    /// todo 判断验证人集合是不是0 是0直接panic
     let statement_store = sc_statement_store::Store::new_shared(
         &config.data_path,
         Default::default(),
@@ -560,7 +562,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
         let keystore = keystore_container.keystore();
         let chain_spec = config.chain_spec.cloned_box();
 
-        let mut net_config = sc_network::config::FullNetworkConfiguration::<
+        let net_config = sc_network::config::FullNetworkConfiguration::<
             Block,
             <Block as BlockT>::Hash,
             Litep2pNetworkBackend,

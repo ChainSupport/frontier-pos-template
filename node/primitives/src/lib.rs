@@ -16,7 +16,7 @@
 // limitations under the License.
 
 //! Low-level types used throughout the Substrate code.
-
+#![allow(unused_imports)]
 #![warn(missing_docs)]
 #![cfg_attr(not(feature = "std"), no_std)]
 

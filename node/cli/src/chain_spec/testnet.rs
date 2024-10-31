@@ -18,6 +18,9 @@
 
 //! Substrate chain configurations.
 
+#![allow(unused_imports)]
+#![allow(unused_variables)]
+
 use hex_literal::hex;
 // todo
 use common_runtime::AccountId;
@@ -214,8 +217,6 @@ fn configure_accounts(
             }
         });
 
-    // stakers: all validators and nominators.
-    let mut rng = rand::thread_rng();
     let stakers = initial_authorities
         .iter()
         .map(|x| (x.0.clone(), x.0.clone(), stash, StakerStatus::Validator))

@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+#![allow(missing_docs)]     
 use fc_rpc::pending::ConsensusDataProvider;
 use sc_client_api::{
     backend::{AuxStore, Backend, StorageProvider},

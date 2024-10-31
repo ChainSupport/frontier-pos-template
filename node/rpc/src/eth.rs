@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+#![allow(missing_docs)]  
 use std::{collections::BTreeMap, sync::Arc};
 
 use jsonrpsee::RpcModule;

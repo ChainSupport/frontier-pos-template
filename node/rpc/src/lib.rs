@@ -28,8 +28,8 @@
 //! are part of it. Therefore all node-runtime-specific RPCs can
 //! be placed here or imported from corresponding FRAME RPC definitions.
 
-#![warn(missing_docs)]
-#![warn(unused_crate_dependencies)]
+#![allow(unused_imports)]
+#![allow(missing_docs)]  
 
 mod eth;
 pub use eth::*;

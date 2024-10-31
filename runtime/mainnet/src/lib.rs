@@ -21,6 +21,10 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limits.
 #![recursion_limit = "1024"]
+#![allow(unused_extern_crates)]
+#![allow(unused_imports)]
+#![allow(missing_docs)]  
+#![allow(dead_code)]
 
 use polkadot_sdk::*;
 

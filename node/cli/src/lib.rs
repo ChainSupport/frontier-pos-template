@@ -28,7 +28,7 @@
 //! Despite its name the produced WASM can theoretically also be used from NodeJS, although this
 //! hasn't been tested.
 
-#![warn(missing_docs)]
+#![allow(missing_docs)]
 
 #[cfg(feature = "cli")]
 mod benchmarking;

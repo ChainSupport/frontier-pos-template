@@ -16,7 +16,7 @@ sp-core = { git="https://github.com/paritytech/polkadot-sdk", branch="release-po
 sp-keystore = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sp-runtime = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sp-consensus-babe = { features = ["serde"], git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
-scale-info = { workspace = true, branch="release-polkadot-v1.13.0" }
+scale-info = { workspace = true}
 sc-service = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sc-client-api = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sc-consensus-babe = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }

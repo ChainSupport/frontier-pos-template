@@ -17,6 +17,8 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 //! Substrate chain configurations.
+#![allow(unused_imports)]
+#![allow(unused_variables)]
 
 use common_runtime::AccountId;
 use hex_literal::hex;
@@ -214,7 +216,6 @@ fn configure_accounts(
         });
 
     // stakers: all validators and nominators.
-    let mut rng = rand::thread_rng();
     let stakers = initial_authorities
         .iter()
         .map(|x| (x.0.clone(), x.0.clone(), stash, StakerStatus::Validator))
