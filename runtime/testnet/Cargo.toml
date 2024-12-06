@@ -57,7 +57,6 @@ pallet-evm-precompile-simple = { workspace = true }
 
 [build-dependencies]
 substrate-wasm-builder = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", optional = true }
-
 [features]
 default = ["std", "insecure_zero_ed"]
 insecure_zero_ed = [
@@ -87,12 +86,25 @@ std = [
 	"pallet-evm-precompile-modexp/std",
 	"pallet-evm-precompile-sha3fips/std",
 	"pallet-evm-precompile-simple/std",
+	"pallet-balances/std",
 ]
 runtime-benchmarks = [
 	"polkadot-sdk/runtime-benchmarks",
+	"pallet-balances/runtime-benchmarks",
 ]
 try-runtime = [
 	"polkadot-sdk/try-runtime",
+	"pallet-balances/try-runtime",
+	# Frontier FRAME
+	"pallet-base-fee/try-runtime",
+	"pallet-dynamic-fee/try-runtime",
+	"pallet-ethereum/try-runtime",
+	"pallet-evm/try-runtime",
+	"pallet-evm-chain-id/try-runtime",
+	#
+	"fp-self-contained/try-runtime",
+	
+
 ]
 
 metadata-hash = ["substrate-wasm-builder/metadata-hash"]
