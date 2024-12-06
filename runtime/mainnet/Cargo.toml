@@ -36,9 +36,6 @@ polkadot-sdk = { git="https://github.com/paritytech/polkadot-sdk", branch="relea
 # shared code between runtime and node
 node-primitives = { path = "../../node/primitives", default-features = false }
 
-# Example pallets that are not published:
-pallet-example-mbm = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false }
-pallet-example-tasks = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false }
 pallet-balances = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", default-features = false, features = ["insecure_zero_ed"] }
 
 # Frontier
@@ -70,8 +67,6 @@ std = [
 	"codec/std",
 	"log/std",
 	"node-primitives/std",
-	"pallet-example-mbm/std",
-	"pallet-example-tasks/std",
 	"polkadot-sdk/std",
 	"primitive-types/std",
 	"scale-info/std",
@@ -93,17 +88,10 @@ std = [
 	"pallet-evm-precompile-simple/std",
 ]
 runtime-benchmarks = [
-	"pallet-example-mbm/runtime-benchmarks",
-	"pallet-example-tasks/runtime-benchmarks",
 	"polkadot-sdk/runtime-benchmarks",
 ]
 try-runtime = [
-	"pallet-example-mbm/try-runtime",
-	"pallet-example-tasks/try-runtime",
 	"polkadot-sdk/try-runtime",
-]
-experimental = [
-	"pallet-example-tasks/experimental",
 ]
 
 metadata-hash = ["substrate-wasm-builder/metadata-hash"]
