@@ -125,74 +125,6 @@ pub fn fetch_nonce(client: &FullClient, account: sp_core::ecdsa::Pair) -> u32 {
         .expect("Fetching account nonce works; qed")
 }
 
-// /// Create a transaction using the given `call`.
-// ///
-// /// The transaction will be signed by `sender`. If `nonce` is `None` it will be fetched from the
-// /// state of the best block.
-// ///
-// /// Note: Should only be used for tests.
-// pub fn create_extrinsic(
-// 	client: &FullClient,
-// 	sender: sp_core::ecdsa::Pair,
-// 	function: impl Into<kitchensink_mainnet_runtime::RuntimeCall>,
-// 	nonce: Option<u32>,
-// ) -> kitchensink_mainnet_runtime::opaque::UncheckedExtrinsic {
-// 	let function = function.into();
-// 	let genesis_hash = client.block_hash(0).ok().flatten().expect("Genesis block exists; qed");
-// 	let best_hash = client.chain_info().best_hash;
-// 	let best_block = client.chain_info().best_number;
-// 	let nonce = nonce.unwrap_or_else(|| fetch_nonce(client, sender.clone()));
-//
-// 	let period = kitchensink_mainnet_runtime::BlockHashCount::get()
-// 		.checked_next_power_of_two()
-// 		.map(|c| c / 2)
-// 		.unwrap_or(2) as u64;
-// 	let tip = 0;
-// 	let extra: kitchensink_mainnet_runtime::SignedExtra =
-// 		(
-// 			frame_system::CheckNonZeroSender::<kitchensink_mainnet_runtime::Runtime>::new(),
-// 			frame_system::CheckSpecVersion::<kitchensink_mainnet_runtime::Runtime>::new(),
-// 			frame_system::CheckTxVersion::<kitchensink_mainnet_runtime::Runtime>::new(),
-// 			frame_system::CheckGenesis::<kitchensink_mainnet_runtime::Runtime>::new(),
-// 			frame_system::CheckEra::<kitchensink_mainnet_runtime::Runtime>::from(generic::Era::mortal(
-// 				period,
-// 				best_block.saturated_into(),
-// 			)),
-// 			frame_system::CheckNonce::<kitchensink_mainnet_runtime::Runtime>::from(nonce),
-// 			frame_system::CheckWeight::<kitchensink_mainnet_runtime::Runtime>::new(),
-// 			pallet_skip_feeless_payment::SkipCheckIfFeeless::from(
-// 				pallet_asset_conversion_tx_payment::ChargeAssetTxPayment::<
-// 					kitchensink_mainnet_runtime::Runtime,
-// 				>::from(tip, None),
-// 			),
-// 			frame_metadata_hash_extension::CheckMetadataHash::new(false),
-// 		);
-//
-// 	let raw_payload = kitchensink_mainnet_runtime::SignedPayload::from_raw(
-// 		function.clone(),
-// 		extra.clone(),
-// 		(
-// 			(),
-// 			kitchensink_mainnet_runtime::VERSION.spec_version,
-// 			kitchensink_mainnet_runtime::VERSION.transaction_version,
-// 			genesis_hash,
-// 			best_hash,
-// 			(),
-// 			(),
-// 			(),
-// 			None,
-// 		),
-// 	);
-// 	let signature = raw_payload.using_encoded(|e| sender.sign(e));
-//
-// 	kitchensink_mainnet_runtime::opaque::UncheckedExtrinsic::new_signed(
-// 		function,
-// 		sp_runtime::AccountId32::from(sender.public()).into(),
-// 		kitchensink_mainnet_runtime::Signature::Sr25519(signature),
-// 		extra,
-// 	)
-// }
-
 /// Creates a new partial node.
 pub fn new_partial<NB>(
     config: &Configuration,
@@ -247,11 +179,6 @@ where
         .transpose()?;
 
     let executor = sc_service::new_wasm_executor(&config);
-    // let FrontierPartialComponents {
-    // 	filter_pool,
-    // 	fee_history_cache,
-    // 	fee_history_cache_limit,
-    // } = new_frontier_partial(&eth_config)?;
     let (client, backend, keystore_container, task_manager) =
         sc_service::new_full_parts::<Block, RuntimeApi, _>(
             config,
@@ -339,8 +266,6 @@ where
     )
     .map_err(|e| ServiceError::Other(format!("Statement store error: {:?}", e)))?;
 
-    // let (mixnet_api, mixnet_api_backend) = mixnet_config.map(sc_mixnet::Api::new).unzip();
-
     Ok(sc_service::PartialComponents {
         client,
         backend,
@@ -425,8 +350,6 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
     let metrics = N::register_notification_metrics(
         config.prometheus_config.as_ref().map(|cfg| &cfg.registry),
     );
-
-    // let (block_import, grandpa_link, babe_link, beefy_links) = import_setup;
 
     let auth_disc_publish_non_global_ips = config.network.allow_non_globals_in_dht;
     let auth_disc_public_addresses = config.network.public_addresses.clone();
@@ -514,22 +437,6 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
             metrics,
         })?;
 
-    // if let Some(mixnet_config) = mixnet_config {
-    // 	let mixnet = sc_mixnet::run(
-    // 		mixnet_config,
-    // 		mixnet_api_backend.expect("Mixnet API backend created if mixnet enabled"),
-    // 		client.clone(),
-    // 		sync_service.clone(),
-    // 		network.clone(),
-    // 		mixnet_protocol_name,
-    // 		transaction_pool.clone(),
-    // 		Some(keystore_container.keystore()),
-    // 		mixnet_notification_service
-    // 			.expect("`NotificationService` exists since mixnet was enabled; qed"),
-    // 	);
-    // 	task_manager.spawn_handle().spawn("mixnet", None, mixnet);
-    // }
-
     let storage_override =
         Arc::new(StorageOverrideHandler::<Block, FullClient, FullBackend>::new(client.clone()));
     let FrontierPartialComponents {
@@ -605,20 +512,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
         let metrics = N::register_notification_metrics(
             config.prometheus_config.as_ref().map(|cfg| &cfg.registry),
         );
-        // let (network, system_rpc_tx, tx_handler_controller, network_starter, sync_service) =
-        // 	sc_service::build_network(sc_service::BuildNetworkParams {
-        // 		config: &config,
-        // 		net_config,
-        // 		client: client.clone(),
-        // 		transaction_pool: transaction_pool.clone(),
-        // 		spawn_handle: task_manager.spawn_handle(),
-        // 		import_queue,
-        // 		block_announce_validator_builder: None,
-        // 		warp_sync_params: None,
-        // 		block_relay: None,
-        // 		metrics,
-        // 	})?;
-
+        
         let prometheus_registry = config.prometheus_registry().cloned();
 
         let block_data_cache = Arc::new(fc_rpc::EthBlockDataCacheTask::new(

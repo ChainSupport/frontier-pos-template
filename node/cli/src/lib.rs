@@ -28,6 +28,8 @@
 //! Despite its name the produced WASM can theoretically also be used from NodeJS, although this
 //! hasn't been tested.
 
+#![cfg(any(feature = "testnet", feature = "mainnet"))]
+
 #![allow(missing_docs)]
 
 #[cfg(feature = "cli")]

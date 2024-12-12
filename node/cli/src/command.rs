@@ -18,6 +18,7 @@
 
 #![allow(unused_imports)]
 #![allow(missing_docs)]  
+#![allow(unreachable_patterns)]
 
 use polkadot_sdk::*;
 
@@ -31,9 +32,9 @@ use common_runtime::opaque::Block;
 use frame_benchmarking_cli::*;
 
 #[cfg(feature = "mainnet")]
-use kitchensink_mainnet_runtime::{ExistentialDeposit, RuntimeApi};
+use kitchensink_mainnet_runtime::{ExistentialDeposit, RuntimeApi, EXISTENTIAL_DEPOSIT};
 #[cfg(feature = "testnet")]
-use kitchensink_testnet_runtime::{ExistentialDeposit, RuntimeApi};
+use kitchensink_testnet_runtime::{ExistentialDeposit, RuntimeApi, EXISTENTIAL_DEPOSIT};
 
 use sc_network::{Litep2pNetworkBackend, NetworkBackend};
 // use node_primitives::Block;
@@ -105,81 +106,78 @@ pub fn run() -> Result<()> {
 
             runner.sync_run(|config| cmd.run::<Block, RuntimeApi>(config))
         }
-        // Some(Subcommand::Benchmark(cmd)) => {
-        // 	let runner = cli.create_runner(cmd)?;
-        //
-        // 	runner.sync_run(|config| {
-        // 		// This switch needs to be in the client, since the client decides
-        // 		// which sub-commands it wants to support.
-        // 		match cmd {
-        // 			BenchmarkCmd::Pallet(cmd) => {
-        // 				if !cfg!(feature = "runtime-benchmarks") {
-        // 					return Err(
-        // 						"Runtime benchmarking wasn't enabled when building the node. \
-        // 					You can enable it with `--features runtime-benchmarks`."
-        // 							.into(),
-        // 					)
-        // 				}
-        //
-        // 				cmd.run_with_spec::<HashingFor<Block>, sp_statement_store::runtime_api::HostFunctions>(Some(config.chain_spec))
-        // 			},
-        // 			BenchmarkCmd::Block(cmd) => {
-        // 				// ensure that we keep the task manager alive
-        // 				let partial = new_partial(&config, None)?;
-        // 				cmd.run(partial.client)
-        // 			},
-        // 			#[cfg(not(feature = "runtime-benchmarks"))]
-        // 			BenchmarkCmd::Storage(_) => Err(
-        // 				"Storage benchmarking can be enabled with `--features runtime-benchmarks`."
-        // 					.into(),
-        // 			),
-        // 			#[cfg(feature = "runtime-benchmarks")]
-        // 			BenchmarkCmd::Storage(cmd) => {
-        // 				// ensure that we keep the task manager alive
-        // 				let partial = new_partial(&config, None)?;
-        // 				let db = partial.backend.expose_db();
-        // 				let storage = partial.backend.expose_storage();
-        //
-        // 				cmd.run(config, partial.client, db, storage)
-        // 			},
-        // 			BenchmarkCmd::Overhead(cmd) => {
-        // 				// ensure that we keep the task manager alive
-        // 				let partial = new_partial(&config, None)?;
-        // 				let ext_builder = RemarkBuilder::new(partial.client.clone());
-        //
-        // 				cmd.run(
-        // 					config,
-        // 					partial.client,
-        // 					inherent_benchmark_data()?,
-        // 					Vec::new(),
-        // 					&ext_builder,
-        // 				)
-        // 			},
-        // 			BenchmarkCmd::Extrinsic(cmd) => {
-        // 				// ensure that we keep the task manager alive
-        // 				let partial = service::new_partial(&config, None)?;
-        // 				// Register the *Remark* and *TKA* builders.
-        // 				let ext_factory = ExtrinsicFactory(vec![
-        // 					Box::new(RemarkBuilder::new(partial.client.clone())),
-        // 					Box::new(TransferKeepAliveBuilder::new(
-        // 						partial.client.clone(),
-        // 						Sr25519Keyring::Alice.to_account_id(),
-        // 						ExistentialDeposit::get(),
-        // 					)),
-        // 				]);
-        //
-        // 				cmd.run(
-        // 					partial.client,
-        // 					inherent_benchmark_data()?,
-        // 					Vec::new(),
-        // 					&ext_factory,
-        // 				)
-        // 			},
-        // 			BenchmarkCmd::Machine(cmd) =>
-        // 				cmd.run(&config, SUBSTRATE_REFERENCE_HARDWARE.clone()),
-        // 		}
-        // 	})
-        // },
+        Some(Subcommand::Benchmark(cmd)) => {
+			let runner = cli.create_runner(cmd)?;
+
+			runner.sync_run(|config| {
+				// This switch needs to be in the client, since the client decides
+				// which sub-commands it wants to support.
+                use crate::benchmarking::{RemarkBuilder, TransferKeepAliveBuilder, inherent_benchmark_data,};
+                use sp_core::{ecdsa, Pair};
+				match cmd {
+					BenchmarkCmd::Pallet(cmd) => {
+						if !cfg!(feature = "runtime-benchmarks") {
+							return Err(
+								"Runtime benchmarking wasn't enabled when building the node. \
+							You can enable it with `--features runtime-benchmarks`."
+									.into(),
+							);
+						}
+
+						cmd.run_with_spec::<sp_runtime::traits::HashingFor<Block>, ()>(Some(
+							config.chain_spec,
+						))
+					},
+					BenchmarkCmd::Block(cmd) => {
+						let PartialComponents { client, .. } = new_partial::<Litep2pNetworkBackend>(&config, &cli.eth, None)?;
+						cmd.run(client)
+					},
+					#[cfg(not(feature = "runtime-benchmarks"))]
+					BenchmarkCmd::Storage(_) => Err(
+						"Storage benchmarking can be enabled with `--features runtime-benchmarks`."
+							.into(),
+					),
+					#[cfg(feature = "runtime-benchmarks")]
+					BenchmarkCmd::Storage(cmd) => {
+						let PartialComponents { client, backend, .. } =
+							service::new_partial(&config)?;
+						let db = backend.expose_db();
+						let storage = backend.expose_storage();
+
+						cmd.run(config, client, db, storage)
+					},
+					BenchmarkCmd::Overhead(cmd) => {
+						let PartialComponents { client, .. } = new_partial::<Litep2pNetworkBackend>(&config, &cli.eth, None)?;
+						let ext_builder = RemarkBuilder::new(client.clone());
+
+						cmd.run(
+							config,
+							client,
+							inherent_benchmark_data()?,
+							Vec::new(),
+							&ext_builder,
+							// false,
+						)
+					},
+					BenchmarkCmd::Extrinsic(cmd) => {
+						let PartialComponents { client, .. } = new_partial::<Litep2pNetworkBackend>(&config, &cli.eth,None)?;
+						// Register the *Remark* and *TKA* builders.
+						let ext_factory = ExtrinsicFactory(vec![
+							Box::new(RemarkBuilder::new(client.clone())),
+							Box::new(TransferKeepAliveBuilder::new(
+								client.clone(),
+								ecdsa::Pair::from_string("//Alice", None).expect("static values are valid; qed").public().into(),
+								EXISTENTIAL_DEPOSIT,
+							)),
+						]);
+
+						cmd.run(client, inherent_benchmark_data()?, Vec::new(), &ext_factory)
+					},
+					BenchmarkCmd::Machine(cmd) =>
+						cmd.run(&config, SUBSTRATE_REFERENCE_HARDWARE.clone()),
+				}
+			})
+		},
         Some(Subcommand::Key(cmd)) => cmd.run(&cli),
         Some(Subcommand::Sign(cmd)) => cmd.run(),
         Some(Subcommand::Verify(cmd)) => cmd.run(),
@@ -259,8 +257,6 @@ pub fn run() -> Result<()> {
             let runner = cli.create_runner(cmd)?;
             runner.sync_run(|config| cmd.run::<Block>(&config))
         }
-
-        // 测试专用
         Some(_) => {
             unreachable!()
         }
