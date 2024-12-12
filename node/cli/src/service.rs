@@ -67,10 +67,6 @@ use sp_api::ProvideRuntimeApi;
 use sp_core::crypto::Pair;
 use sp_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
 use std::{path::Path, sync::Arc};
-// use crate::client::{FullBackend, FullClient};
-
-// pub type Backend = FullBackend<Block>;
-// pub type Client = FullClient<Block, RuntimeApi, HostFunctions>;
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(not(feature = "runtime-benchmarks"))]
