@@ -138,10 +138,6 @@ pub fn new_partial<NB>(
         sc_consensus::DefaultImportQueue<Block>,
         sc_transaction_pool::FullPool<Block, FullClient>,
         (
-            // impl Fn(
-            // 	node_rpc::DenyUnsafe,
-            // 	sc_rpc::SubscriptionTaskExecutor,
-            // ) -> Result<jsonrpsee::RpcModule<()>, sc_service::Error>,
             (
                 sc_consensus_babe::BabeBlockImport<
                     Block,
@@ -512,7 +508,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
         let metrics = N::register_notification_metrics(
             config.prometheus_config.as_ref().map(|cfg| &cfg.registry),
         );
-        
+
         let prometheus_registry = config.prometheus_registry().cloned();
 
         let block_data_cache = Arc::new(fc_rpc::EthBlockDataCacheTask::new(
