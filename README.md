@@ -5,12 +5,6 @@ This is a general public chain development template based on [polkadot-sdk](http
 ## develop chain
 [start develop](./docs/start-develop.md)
 
-## Develop and deploy your ink contract.
-- [ink docs](https://docs.substrate.io/tutorials/smart-contracts/)
-- deploy
-  - [ui.use.ink](https://ui.use.ink/)
-  - [poladot.js](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/contracts)
-
 > cargo install --force --locked cargo-contract --version 4.1.1
 ## Develop and deploy your Solidity contract.
 [https://hardhat.org/tutorial](https://hardhat.org/tutorial)
