@@ -3628,6 +3628,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ecdsa-keyring"
+version = "0.1.0"
+dependencies = [
+ "fp-account",
+ "sp-core",
+ "sp-runtime",
+ "strum 0.26.3",
+]
+
+[[package]]
 name = "ed25519"
 version = "1.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"

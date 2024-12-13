@@ -94,6 +94,7 @@ pub fn make_secondary_vrf_pre_digest(
     Digest { logs: vec![log] }
 }
 
+// todo 在这里验证就是这个人的
 fn make_vrf_signature(
     randomness: &Randomness,
     slot: Slot,
@@ -101,7 +102,9 @@ fn make_vrf_signature(
     key: sp_consensus_babe::AuthorityId,
     keystore: &KeystorePtr,
 ) -> Option<VrfSignature> {
+    // fixme 这个可能就是输入
     let transcript = make_vrf_transcript(randomness, slot, epoch);
+    // 对输入进行签名
     let try_sign = Keystore::sr25519_vrf_sign(
         &**keystore,
         sp_consensus_babe::KEY_TYPE,
@@ -119,7 +122,7 @@ fn make_vrf_signature(
             // VRF signature cannot be validated using key and transcript
             return None;
         }
-        return Some(signature);
+        return Some(signature); // fixme 这个签名应该是包含了新的随机值
     } else {
         // VRF key not found in keystore or VRF signing failed
         None

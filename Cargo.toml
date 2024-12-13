@@ -9,7 +9,7 @@ homepage = "https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/i
 resolver = "2"
 
 members = [
-   "client/babe-consensus-data-provider",
+   "client/babe-consensus-data-provider", "client/ecdsa-keyring",
     "node/cli",
     "node/inspect",
     "node/primitives",
