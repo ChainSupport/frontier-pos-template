@@ -29,7 +29,6 @@
 //! hasn't been tested.
 
 #![cfg(any(feature = "testnet", feature = "mainnet"))]
-
 #![allow(missing_docs)]
 
 #[cfg(feature = "cli")]

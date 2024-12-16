@@ -296,12 +296,9 @@ pub fn testnet_genesis(
 }
 
 fn development_config_genesis_json() -> serde_json::Value {
-    let extra_endowed_accounts_balance = vec![(
-        Keyring::Baltathar.into(),
-        100_000_000 * DOLLARS,
-    )];
+    let extra_endowed_accounts_balance = vec![(Keyring::Baltathar.into(), 100_000_000 * DOLLARS)];
     testnet_genesis(
-        vec![authority_keys_from_alice()], 
+        vec![authority_keys_from_alice()],
         vec![],
         Keyring::Alith.into(),
         Some(vec![Keyring::Alith.into()]),

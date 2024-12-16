@@ -22,9 +22,9 @@
 #![allow(unused_variables)]
 #![allow(clippy::clone_on_copy)]
 
-use hex_literal::hex;
-use ecdsa_keyring::Keyring;
 use common_runtime::AccountId;
+use ecdsa_keyring::Keyring;
+use hex_literal::hex;
 use kitchensink_testnet_runtime::{
     constants::currency::*, wasm_binary_unwrap, Block, MaxNominations, SessionKeys, StakerStatus,
 };
@@ -295,10 +295,7 @@ pub fn testnet_genesis(
 }
 
 fn development_config_genesis_json() -> serde_json::Value {
-    let extra_endowed_accounts_balance = vec![(
-        Keyring::Baltathar.into(),
-        1000_000_000 * DOLLARS,
-    )];
+    let extra_endowed_accounts_balance = vec![(Keyring::Baltathar.into(), 1000_000_000 * DOLLARS)];
     testnet_genesis(
         vec![authority_keys_from_alice()], // vec![AccountId::from(hex!("d43593c715fdd31c61141abd04a99fd6822c8558"))],
         vec![],

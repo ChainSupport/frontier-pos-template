@@ -29,7 +29,7 @@
 //! be placed here or imported from corresponding FRAME RPC definitions.
 
 #![allow(unused_imports)]
-#![allow(missing_docs)]  
+#![allow(missing_docs)]
 
 mod eth;
 pub use eth::*;

@@ -48,7 +48,6 @@ impl HandleCredit<AccountId, Assets> for CreditToBlockAuthor {
     }
 }
 
-
 #[cfg(test)]
 mod multiplier_tests {
     use frame_support::{

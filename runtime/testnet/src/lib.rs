@@ -337,18 +337,13 @@ pub struct BaseCallFilter;
 impl Contains<RuntimeCall> for BaseCallFilter {
     fn contains(t: &RuntimeCall) -> bool {
         match t {
-            RuntimeCall::Balances(c) => {
-                match c {
-                    pallet_balances::Call::force_set_balance { .. } => true,
-                    _ => false,
-                    
-                }
-             
+            RuntimeCall::Balances(c) => match c {
+                pallet_balances::Call::force_set_balance { .. } => true,
+                _ => false,
             },
 
             RuntimeCall::Vesting(..) => false,
             _ => true,
-            
         }
     }
 }

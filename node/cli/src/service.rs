@@ -18,7 +18,7 @@
 
 #![allow(unused_extern_crates)]
 #![allow(unused_imports)]
-#![allow(missing_docs)]  
+#![allow(missing_docs)]
 #![allow(unused_variables)]
 #![allow(clippy::clone_on_copy)]
 
