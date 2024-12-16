@@ -192,24 +192,10 @@ pub mod test {
     #[test]
     pub fn test() {
 
-        
-        // // 貌似这个方法不支持BIP44
-        // // f62b4c3327f61ac50c34f217e3dc61ac1a147b25951e326c702de9d8a281648a 私钥
-        // // 7dd7b004a42508ad7a0b39e7e7483f4208d084d0 地址
-        // // 直接根据种子生成是相同的 fixme 
-        // let v = Vec::from_hex("f62b4c3327f61ac50c34f217e3dc61ac1a147b25951e326c702de9d8a281648a").unwrap();
-        // println!("v len: {:?}", v.len());
-        // let pair = Pair::from_seed_slice(v.as_ref()).unwrap();
-		
-        // let account_id: AccountId20 = pair.public().into();
-        // println!("account id: {:?}", account_id);
-
         // bip39由助记词生成种子
         let mn = Mnemonic::from_phrase(&DEV_PHRASE, Language::English).unwrap();
         let seed: Seed = Seed::new(&mn, "");
         println!("seed: {:?}", hex::encode(seed.as_bytes()));
-        // let m = MiniSecretKey::from_bytes(&seed.as_bytes()[..32]).expect("Length is always correct; qed");
-        // println!("m: \n {:?}", hex::encode(m.to_bytes()));
 
         // bip44生成派生地址
         let path = DerivationPath::bip44(60,0,0,0).unwrap();
@@ -220,14 +206,16 @@ pub mod test {
         // 这个就是私钥
         println!("Rchild_xprv: {:?}", hex::encode(child_xprv.private_key().to_bytes()));
 
-        // 通过特定算法 根据私钥生成公钥
-
-        // 根据公钥变成地址
-
         // fixme 根据私钥生成是准确的
         let p = Pair::from_seed_slice(child_xprv.to_bytes().as_ref()).unwrap();
         let account_id: AccountId20 = p.public().into();
         println!("account id: {:?}", account_id);
+
+        // 通过特定算法 根据私钥生成公钥
+
+        // 根据公钥变成地址
+
+        
 
         
 
