@@ -286,7 +286,6 @@ pub fn testnet_genesis(
         "babe": {
             "epochConfig": Some(kitchensink_testnet_runtime::BABE_GENESIS_EPOCH_CONFIG),
         },
-        // "society": { "pot": 0 },
         "nominationPools": {
             "minCreateBond": 10 * DOLLARS,
             "minJoinBond": 1 * DOLLARS,
@@ -296,7 +295,6 @@ pub fn testnet_genesis(
 }
 
 fn development_config_genesis_json() -> serde_json::Value {
-    // BALTATHAR
     let extra_endowed_accounts_balance = vec![(
         Keyring::Baltathar.into(),
         1000_000_000 * DOLLARS,
