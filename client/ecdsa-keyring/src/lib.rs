@@ -50,11 +50,11 @@ impl Keyring {
         Public::from(self).to_raw_vec()
     }
 
-    pub fn from_h256_public(who: H160) -> Option<Keyring> {
+    pub fn from_h160_public(who: H160) -> Option<Keyring> {
         Self::iter().find(|k| k.to_account_id() == who.into())
     }
 
-    pub fn to_h256_public(self) -> H160 {
+    pub fn to_h160_public(self) -> H160 {
         self.to_account_id().into()
     }
 
@@ -336,8 +336,8 @@ pub mod test {
         );
 
         Keyring::iter().for_each(|k| {
-            let h160 = k.to_h256_public();
-            assert_eq!(Keyring::from_h256_public(h160), Some(k));
+            let h160 = k.to_h160_public();
+            assert_eq!(Keyring::from_h160_public(h160), Some(k));
         });
 
         Keyring::iter().for_each(|k| {
