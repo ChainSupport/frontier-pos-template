@@ -50,6 +50,14 @@ impl Keyring {
         Public::from(self).to_raw_vec()
     }
 
+    pub fn from_h256_public(who: H160) -> Option<Keyring> {
+        Self::iter().find(|k| k.to_account_id() == who.into())
+    }
+
+    pub fn to_h256_public(self) -> H160 {
+        self.to_account_id().into()
+    }
+
     pub fn to_account_id(self) -> AccountId20 {
         Into::<Public>::into(self.to_raw_public()).into()
     }
@@ -78,6 +86,10 @@ impl Keyring {
 
     pub fn public(self) -> Public {
         Public::from(self)
+    }
+
+    pub fn well_known() -> impl Iterator<Item = Keyring> {
+        Self::iter().take(6)
     }
 
     pub fn invulnerable() -> impl Iterator<Item = Keyring> {
@@ -310,6 +322,23 @@ pub mod test {
                 Keyring::Faith,
             ]
         );
+
+        assert_eq!(
+            Keyring::well_known().into_iter().collect::<Vec<Keyring>>(),
+            vec![
+                Keyring::Alith,
+                Keyring::Baltathar,
+                Keyring::CharLeth,
+                Keyring::Dorothy,
+                Keyring::Ethan,
+                Keyring::Faith,
+            ]
+        );
+
+        Keyring::iter().for_each(|k| {
+            let h160 = k.to_h256_public();
+            assert_eq!(Keyring::from_h256_public(h160), Some(k));
+        });
 
         Keyring::iter().for_each(|k| {
             let msg = "test";
