@@ -35,6 +35,7 @@ use sp_runtime::SaturatedConversion;
 use kitchensink_mainnet_runtime::{self as runtime, BalancesCall, SystemCall, UncheckedExtrinsic};
 #[cfg(feature = "testnet")]
 use kitchensink_testnet_runtime::{self as runtime, BalancesCall, SystemCall, UncheckedExtrinsic};
+use ecdsa_keyring::Keyring;
 
 use node_primitives::{AccountId, Balance};
 use sc_cli::Result;
@@ -69,7 +70,7 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for RemarkBuilder {
 	}
 
 	fn build(&self, nonce: u32) -> std::result::Result<OpaqueExtrinsic, &'static str> {
-		let acc = ecdsa::Pair::from_string("//Bob", None).expect("static values are valid; qed");
+		let acc = Keyring::Alith.pair();
 		let extrinsic: OpaqueExtrinsic = create_extrinsic(
 			self.client.as_ref(),
 			acc,
@@ -108,7 +109,7 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for TransferKeepAliveBuilder {
 	}
 
 	fn build(&self, nonce: u32) -> std::result::Result<OpaqueExtrinsic, &'static str> {
-		let acc = ecdsa::Pair::from_string("//Bob", None).expect("static values are valid; qed");
+		let acc = Keyring::Alith.pair();
 		let extrinsic: OpaqueExtrinsic = create_extrinsic(
 			self.client.as_ref(),
 			acc,

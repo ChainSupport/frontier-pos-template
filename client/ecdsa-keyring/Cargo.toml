@@ -15,10 +15,16 @@ strum = { version = "0.26.3", features = ["derive"], default-features = false }
 sp-core = { workspace = true }
 sp-runtime = { workspace = true }
 fp-account = { workspace = true }
+hex = "0.4.3"
+bip32 = "0.5.2"
+tiny-bip39 = "2.0.0"
+derivation-path = "0.2.0"
+schnorrkel = "0.11.4"
+sp-keyring = { workspace = true}
 
 [features]
 default = ["std"]
-std = ["sp-core/std", "sp-runtime/std", "strum/std", "fp-account/std"]
+std = ["sp-core/std", "sp-runtime/std", "strum/std", "fp-account/std", "sp-keyring/std"]
 
 [lints]
 workspace = true

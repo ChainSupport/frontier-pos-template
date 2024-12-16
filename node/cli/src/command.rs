@@ -30,6 +30,7 @@ use crate::{
 };
 use common_runtime::opaque::Block;
 use frame_benchmarking_cli::*;
+use ecdsa_keyring::Keyring;
 
 #[cfg(feature = "mainnet")]
 use kitchensink_mainnet_runtime::{ExistentialDeposit, RuntimeApi, EXISTENTIAL_DEPOSIT};
@@ -166,7 +167,7 @@ pub fn run() -> Result<()> {
 							Box::new(RemarkBuilder::new(client.clone())),
 							Box::new(TransferKeepAliveBuilder::new(
 								client.clone(),
-								ecdsa::Pair::from_string("//Alice", None).expect("static values are valid; qed").public().into(),
+                                Keyring::Alith.pair().public().into(),
 								EXISTENTIAL_DEPOSIT,
 							)),
 						]);

@@ -60,6 +60,8 @@ common-runtime = {path = "../../runtime/common"}
 node-rpc = { path = "../rpc" }
 node-primitives = { path = "../primitives" }
 node-inspect = { package = "staging-node-inspect", path = "../inspect", optional = true }
+# local
+ecdsa-keyring = {workspace = true}
 
 # Frontier
 fc-api = { workspace = true }

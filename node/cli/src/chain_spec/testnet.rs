@@ -23,7 +23,7 @@
 #![allow(clippy::clone_on_copy)]
 
 use hex_literal::hex;
-// todo
+use ecdsa_keyring::Keyring;
 use common_runtime::AccountId;
 use kitchensink_testnet_runtime::{
     constants::currency::*, wasm_binary_unwrap, Block, MaxNominations, SessionKeys, StakerStatus,
@@ -151,8 +151,8 @@ pub fn authority_keys_from_alice() -> (
 ) {
     let seed = "Alice";
     (
-        AccountId::from(hex!("f24FF3a9CF04c71Dbc94D0b566f7A27B94566cac")),
-        AccountId::from(hex!("f24FF3a9CF04c71Dbc94D0b566f7A27B94566cac")),
+        Keyring::Alith.into(),
+        Keyring::Alith.into(),
         get_from_seed::<GrandpaId>(seed),
         get_from_seed::<BabeId>(seed),
         get_from_seed::<ImOnlineId>(seed),
@@ -193,18 +193,12 @@ fn configure_accounts(
 ) {
     let mut endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(|| {
         vec![
-            get_account_id_from_seed::<ecdsa::Public>("Alice"),
-            get_account_id_from_seed::<ecdsa::Public>("Bob"),
-            get_account_id_from_seed::<ecdsa::Public>("Charlie"),
-            get_account_id_from_seed::<ecdsa::Public>("Dave"),
-            get_account_id_from_seed::<ecdsa::Public>("Eve"),
-            get_account_id_from_seed::<ecdsa::Public>("Ferdie"),
-            get_account_id_from_seed::<ecdsa::Public>("Alice//stash"),
-            get_account_id_from_seed::<ecdsa::Public>("Bob//stash"),
-            get_account_id_from_seed::<ecdsa::Public>("Charlie//stash"),
-            get_account_id_from_seed::<ecdsa::Public>("Dave//stash"),
-            get_account_id_from_seed::<ecdsa::Public>("Eve//stash"),
-            get_account_id_from_seed::<ecdsa::Public>("Ferdie//stash"),
+            Keyring::Alith.into(),
+            Keyring::Baltathar.into(),
+            Keyring::CharLeth.into(),
+            Keyring::Dorothy.into(),
+            Keyring::Ethan.into(),
+            Keyring::Faith.into(),
         ]
     });
     // endow all authorities and nominators.
@@ -304,17 +298,14 @@ pub fn testnet_genesis(
 fn development_config_genesis_json() -> serde_json::Value {
     // BALTATHAR
     let extra_endowed_accounts_balance = vec![(
-        AccountId::from(hex!("3Cd0A705a2DC65e5b1E1205896BaA2be8A07c6e0")),
+        Keyring::Baltathar.into(),
         1000_000_000 * DOLLARS,
     )];
     testnet_genesis(
         vec![authority_keys_from_alice()], // vec![AccountId::from(hex!("d43593c715fdd31c61141abd04a99fd6822c8558"))],
         vec![],
-        // ALITH
-        AccountId::from(hex!("f24FF3a9CF04c71Dbc94D0b566f7A27B94566cac")),
-        Some(vec![AccountId::from(hex!(
-            "f24FF3a9CF04c71Dbc94D0b566f7A27B94566cac"
-        ))]),
+        Keyring::Alith.into(),
+        Some(vec![Keyring::Alith.into()]),
         extra_endowed_accounts_balance,
         42u32,
     )
