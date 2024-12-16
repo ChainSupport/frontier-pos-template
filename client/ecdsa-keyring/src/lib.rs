@@ -2,7 +2,7 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
 
-use sp_core::ecdsa;
+use sp_core::{ecdsa, H160};
 #[cfg(feature = "std")]
 use sp_core::ecdsa::Signature;
 use sp_core::{
@@ -150,6 +150,27 @@ impl From<Keyring> for Pair {
 	fn from(k: Keyring) -> Self {
 		k.pair()
 	}
+}
+
+
+impl From<Keyring> for [u8; 20] {
+    fn from(value: Keyring) -> Self {
+        match value {
+            Keyring::Alith => hex2array!("f24ff3a9cf04c71dbc94d0b566f7a27b94566cac"),
+            Keyring::Baltathar => hex2array!("3cd0a705a2dc65e5b1e1205896baa2be8a07c6e0"),
+            Keyring::CharLeth => hex2array!("798d4ba9baf0064ec19eb4f0a1a45785ae9d6dfc"),
+            Keyring::Dorothy => hex2array!("773539d4ac0e786233d90a233654ccee26a613d9"),
+            Keyring::Ethan => hex2array!("ff64d3f6efe2317ee2807d223a0bdc4c0c49dfdb"),
+            Keyring::Faith => hex2array!("c0f0f4ab324c46e55d02d0033343b4be8a55532d"),
+            
+        }
+    }
+}
+
+impl From<Keyring> for H160 {
+    fn from(value: Keyring) -> Self {
+        value.into()
+    }
 }
 
 

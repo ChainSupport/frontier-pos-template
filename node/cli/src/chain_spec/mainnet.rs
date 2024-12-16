@@ -287,7 +287,7 @@ pub fn testnet_genesis(
         "babe": {
             "epochConfig": Some(kitchensink_mainnet_runtime::BABE_GENESIS_EPOCH_CONFIG),
         },
-        "society": { "pot": 0 },
+        // "society": { "pot": 0 },
         "nominationPools": {
             "minCreateBond": 10 * DOLLARS,
             "minJoinBond": 1 * DOLLARS,
