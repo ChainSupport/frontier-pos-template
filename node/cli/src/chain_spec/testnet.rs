@@ -137,6 +137,30 @@ pub fn authority_keys_from_alice() -> (
     )
 }
 
+/// Helper function to generate stash, controller and session key from seed.
+pub fn authority_keys_from_bob() -> (
+    AccountId,
+    AccountId,
+    GrandpaId,
+    BabeId,
+    ImOnlineId,
+    AuthorityDiscoveryId,
+    MixnetId,
+    BeefyId,
+) {
+    let seed = "Bob";
+    (
+        Keyring::Baltathar.into(),
+        Keyring::Baltathar.into(),
+        get_from_seed::<GrandpaId>(seed),
+        get_from_seed::<BabeId>(seed),
+        get_from_seed::<ImOnlineId>(seed),
+        get_from_seed::<AuthorityDiscoveryId>(seed),
+        get_from_seed::<MixnetId>(seed),
+        get_from_seed::<BeefyId>(seed),
+    )
+}
+
 fn configure_accounts(
     initial_authorities: Vec<(
         AccountId,
@@ -270,12 +294,12 @@ pub fn testnet_genesis(
 }
 
 fn development_config_genesis_json() -> serde_json::Value {
-    let extra_endowed_accounts_balance = vec![(Keyring::Baltathar.into(), 1000_000_000 * DOLLARS)];
+    let extra_endowed_accounts_balance = vec![(Keyring::CharLeth.into(), 1000_000_000 * DOLLARS)];
     testnet_genesis(
-        vec![authority_keys_from_alice()], // vec![AccountId::from(hex!("d43593c715fdd31c61141abd04a99fd6822c8558"))],
+        vec![authority_keys_from_alice(), authority_keys_from_bob()], 
         vec![],
         Keyring::Alith.into(),
-        Some(vec![Keyring::Alith.into()]),
+        Some(vec![Keyring::Alith.into(), Keyring::Baltathar.into()]),
         extra_endowed_accounts_balance,
         42u32,
     )
