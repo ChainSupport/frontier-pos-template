@@ -32,7 +32,7 @@ use kitchensink_mainnet_runtime::{self as runtime, BalancesCall, SystemCall, Unc
 use kitchensink_testnet_runtime::{self as runtime, BalancesCall, SystemCall, UncheckedExtrinsic};
 use polkadot_sdk::*;
 use sc_client_api::BlockBackend;
-use sp_core::{ecdsa, Pair};
+use sp_core::Pair;
 use sp_runtime::SaturatedConversion;
 
 use node_primitives::{AccountId, Balance};
