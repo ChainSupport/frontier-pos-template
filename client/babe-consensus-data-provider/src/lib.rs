@@ -1,3 +1,29 @@
+// This file is part of frontier-pos-template.
+
+// Copyright (C) Parity Technologies (UK) Ltd.
+// SPDX-License-Identifier: Apache-2.0
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+//! This crate is used for the EVM pending API.
+//! The implementations of `make_primary_pre_digest`, `make_secondary_plain_pre_digest`, and `make_secondary_vrf_pre_digest` are fully based on 
+//! https://github.com/paritytech/polkadot-sdk/blob/master/substrate/frame/babe/src/mock.rs, 
+//! so these methods do not require additional testing.
+//!
+//! Where is this crate used in this project?
+//! https://github.com/ChainSupport/frontier-pos-template/blob/main/node/rpc/src/eth.rs#L150
+
+
 #![allow(unused_imports)]
 #![allow(missing_docs)]
 #![allow(clippy::clone_on_copy)]
@@ -94,7 +120,6 @@ pub fn make_secondary_vrf_pre_digest(
     Digest { logs: vec![log] }
 }
 
-// todo 在这里验证就是这个人的
 fn make_vrf_signature(
     randomness: &Randomness,
     slot: Slot,
@@ -102,9 +127,8 @@ fn make_vrf_signature(
     key: sp_consensus_babe::AuthorityId,
     keystore: &KeystorePtr,
 ) -> Option<VrfSignature> {
-    // fixme 这个可能就是输入
+    // VRF input
     let transcript = make_vrf_transcript(randomness, slot, epoch);
-    // 对输入进行签名
     let try_sign = Keystore::sr25519_vrf_sign(
         &**keystore,
         sp_consensus_babe::KEY_TYPE,
@@ -122,7 +146,7 @@ fn make_vrf_signature(
             // VRF signature cannot be validated using key and transcript
             return None;
         }
-        return Some(signature); // fixme 这个签名应该是包含了新的随机值
+        return Some(signature); 
     } else {
         // VRF key not found in keystore or VRF signing failed
         None
@@ -155,10 +179,12 @@ where
             .keystore
             .sr25519_public_keys(sp_consensus_babe::KEY_TYPE);
         if public_keys.len() > 0 && slot.is_some() {
+            // Retrieve the first value (note that the keystore of the node must ensure there is only one BABE key pair).
             let validator_public_key: sp_consensus_babe::AuthorityId = public_keys[0].into();
             let maybe_pos = authorities
                 .iter()
                 .position(|a| &validator_public_key == &a.0);
+            // This will only be executed by validators.
             if let Some(authority_index) = maybe_pos {
                 match allowed_slots {
                     AllowedSlots::PrimaryAndSecondaryPlainSlots => {
@@ -205,4 +231,41 @@ where
     }
 }
 
-// todo 用alice来验证 看看可不可以通过
+
+#[cfg(test)]
+pub mod test {
+    #![allow(unused_variables)]
+    use sp_keyring::sr25519::{self,Keyring};
+    use sp_keystore::{Keystore, KeystorePtr, testing::MemoryKeystore};
+    use sp_core::crypto::key_types::BABE;
+    use sp_consensus_babe::{Randomness, Slot, SlotDuration, Epoch};
+    use sp_core::sr25519::Public;
+    use sp_timestamp::Timestamp;
+    use std::sync::Arc;
+    use sp_core::crypto::VrfPublic;
+    use sp_consensus_babe::make_vrf_transcript;
+    use sp_consensus_babe::RANDOMNESS_VRF_CONTEXT;
+
+    use crate::make_vrf_signature;
+    #[test]
+    fn make_vrf_signature_should_works() {
+
+        let seed = Keyring::Alice.to_seed();
+        let keystore = Arc::new(MemoryKeystore::new());
+        keystore.sr25519_generate_new(BABE, Some(&seed)).unwrap();
+        let alice_public: Public  = Keyring::Alice.public().into();
+        let randomness = [1; 32];
+        let keystore: Arc<dyn Keystore> = keystore.clone() as Arc<dyn Keystore>;
+        let epoch = 1;
+        let slot = Slot::from_timestamp(Timestamp::new(3000), SlotDuration::from_millis(1000));
+        let transcript = make_vrf_transcript(&randomness, slot, epoch);
+        // The reason no new randomness is output here is that it can be obtained on-chain.
+        let vrf_signature = make_vrf_signature(&randomness, slot, epoch, alice_public.into(), &keystore);
+        assert!(alice_public.vrf_verify(&transcript.clone().into_sign_data(), &vrf_signature.clone().unwrap()), "");
+        // Randomness generated on-chain
+        let new_randomness:[u8; 32] = alice_public.make_bytes(RANDOMNESS_VRF_CONTEXT, &transcript, &vrf_signature.unwrap().pre_output).unwrap();
+        println!("new_randomness: {:?}", new_randomness);
+
+    }
+
+}

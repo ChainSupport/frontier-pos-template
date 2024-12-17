@@ -21,6 +21,8 @@ sc-service = { git="https://github.com/paritytech/polkadot-sdk", branch="release
 sc-client-api = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sc-consensus-babe = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
 sp-inherents = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0", features = ["default"] }
+sp-timestamp = { git="https://github.com/paritytech/polkadot-sdk", branch="release-polkadot-v1.13.0" }
+sp-keyring = { workspace = true}
 # Other
 schnorrkel = { version = "0.11.4", default-features = false, features = [
     "preaudit_deprecated",

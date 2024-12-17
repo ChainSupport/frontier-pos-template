@@ -1006,8 +1006,10 @@ dependencies = [
  "sp-consensus-babe",
  "sp-core",
  "sp-inherents",
+ "sp-keyring",
  "sp-keystore",
  "sp-runtime",
+ "sp-timestamp",
 ]
 
 [[package]]
