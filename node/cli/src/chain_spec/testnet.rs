@@ -114,31 +114,6 @@ where
 }
 
 /// Helper function to generate stash, controller and session key from seed.
-pub fn authority_keys_from_seed(
-    seed: &str,
-) -> (
-    AccountId,
-    AccountId,
-    GrandpaId,
-    BabeId,
-    ImOnlineId,
-    AuthorityDiscoveryId,
-    MixnetId,
-    BeefyId,
-) {
-    (
-        get_account_id_from_seed::<ecdsa::Public>(&format!("{}//stash", seed)),
-        get_account_id_from_seed::<ecdsa::Public>(seed),
-        get_from_seed::<GrandpaId>(seed),
-        get_from_seed::<BabeId>(seed),
-        get_from_seed::<ImOnlineId>(seed),
-        get_from_seed::<AuthorityDiscoveryId>(seed),
-        get_from_seed::<MixnetId>(seed),
-        get_from_seed::<BeefyId>(seed),
-    )
-}
-
-/// Helper function to generate stash, controller and session key from seed.
 pub fn authority_keys_from_alice() -> (
     AccountId,
     AccountId,
