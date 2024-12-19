@@ -308,11 +308,9 @@ fn development_config_genesis_json() -> serde_json::Value {
 /// Development config (single validator Alice).
 pub fn development_config() -> ChainSpec {
     ChainSpec::builder(wasm_binary_unwrap(), Default::default())
-        .with_name("Development")
-        .with_id("dev")
-        // .with_id()
+        .with_name("Frontier Testnet")
+        .with_id("frontier-testnet")
         .with_chain_type(ChainType::Development)
-        // .with_properties(serde_json::from_str("{\"tokenDecimals\": 18, \"tokenSymbol\": \"UNIT\"}")
         .with_properties(
             serde_json::from_str(
                 "{\"isEthereum\": true, \"tokenDecimals\": 18, \"tokenSymbol\": \"UNIT\"}",
