@@ -2,6 +2,20 @@ version: '1.0.0'
 
 services:
 
+  init_alice:
+    image: chainsupport/substrate-testnet-node:latest
+    entrypoint: ["/usr/local/bin/substrate"]
+    command: ["key", "generate-node-key", "--base-path", "/data"]
+    volumes:
+      - ./db/alice:/data
+  
+  init_bob:
+    image: chainsupport/substrate-testnet-node:latest
+    entrypoint: ["/usr/local/bin/substrate"]
+    command: ["key", "generate-node-key", "--base-path", "/data"]
+    volumes:
+      - ./db/bob:/data
+
   alice:
     image: chainsupport/substrate-testnet-node:latest
     command: ["--pruning", "archive", "--alice", "--rpc-max-connections", "100", "--rpc-cors", "all", "--rpc-methods", "Unsafe", "--unsafe-rpc-external"]
@@ -11,6 +25,9 @@ services:
       - 30333:30333
       - 9944:9944 
       - 9933:9933
+    depends_on:
+      - init_alice
+
     networks:
       - substrate
       
@@ -21,9 +38,12 @@ services:
     volumes:
       - ./db/bob:/data 
     ports:
-      - 30333:30333
-      - 9944:9944 
-      - 9933:9933
+      - 30334:30333
+      - 9945:9944 
+      - 9934:9933
+
+    depends_on:
+      - init_bob
     networks:
       - substrate
 
