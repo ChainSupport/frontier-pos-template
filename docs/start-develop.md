@@ -6,7 +6,7 @@
 - [build node in docker](./build-node-docker.md)
 
 ### run devnet node
-[run devnet](./run-devnet-node.md)
+[run devnet](./run-testnet-node.md)
 
 
 

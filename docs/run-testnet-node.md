@@ -13,11 +13,11 @@ cargo build --release --features testnet
 ### run
 
 ```
-./substrate  --database auto
+./substrate  --database auto --alice
 ```
 
 ### **2. docker**
 ```
-docker run -id <your dockerhub account>/substrate:latest ""
+docker-compose up
 ```
 > my command `docker run -id chainsupport/substarte-testnet-node:latest ""`
