@@ -19,13 +19,15 @@ This is a general public chain development template based on [polkadot-sdk](http
 > Note that currently BlockScout does not support displaying transfer records in the balances module, so you should use MetaMask as much as possible for transfers.
 
 ## connect MetaMask wallet
-
 ```
 Network name: Frontier Testnet
-Default RPC URL: http:localhost:9944
+Default RPC URL: http://localhost:9944
 Chain ID: 42
 Currency symbol: UNIT
 ```
+
+![add network to MetaMask](./docs/images/add_network_to_metamask.jpg)
+
 
 > To make it easier for users and developers in the Ethereum community to connect to your network node or wallet, you should add your network on [https://chainlist.org/](https://chainlist.org/).
 
