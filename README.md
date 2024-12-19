@@ -14,8 +14,10 @@ This is a general public chain development template based on [polkadot-sdk](http
 [https://github.com/blockscout/blockscout](https://github.com/blockscout/blockscout)
 > Note that currently BlockScout does not support displaying transfer records in the balances module, so you should use MetaMask as much as possible for transfers.
 
-## 连接你的小狐狸钱包
+## connect MetaMask wallet
 todo 
+
+> To make it easier for users and developers in the Ethereum community to connect to your network node or wallet, you should add your network on [https://chainlist.org/](https://chainlist.org/).
 
 ## License
 
