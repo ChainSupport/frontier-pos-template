@@ -21,6 +21,7 @@
 //! Should only be used for benchmarking as it may break in other contexts.
 
 #![allow(dead_code)]
+#![allow(unused_variables)]
 #![cfg(any(feature = "testnet", feature = "mainnet"))]
 
 use crate::service::FullClient;
@@ -166,6 +167,7 @@ pub fn create_extrinsic(
         frame_system::CheckNonce::<runtime::Runtime>::from(nonce),
         frame_system::CheckWeight::<runtime::Runtime>::new(),
         pallet_transaction_payment::ChargeTransactionPayment::<runtime::Runtime>::from(0),
+        frame_metadata_hash_extension::CheckMetadataHash::new(false),
     );
 
     let raw_payload = runtime::SignedPayload::from_raw(
@@ -180,6 +182,7 @@ pub fn create_extrinsic(
             (),
             (),
             (),
+            None,
         ),
     );
     let signature: MultiSignature = raw_payload.using_encoded(|e| sender.sign(e)).into();
