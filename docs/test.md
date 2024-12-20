@@ -39,8 +39,8 @@ cargo test --features mainnet -- --nocapture
 
 ```
 
-## 覆盖率报告
-
+## Generate test coverage report
+todo 
 ## docker build
 
 [build node docker](./build-node-docker.md)
