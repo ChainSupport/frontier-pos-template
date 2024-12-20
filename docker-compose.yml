@@ -39,7 +39,7 @@ services:
       - ./db/bob:/data 
     ports:
       - 30334:30333
-      - 9945:9944 
+      - 8545:9944 # 
       - 9934:9933
 
     depends_on:
