@@ -5,8 +5,7 @@ This is a general public chain development template based on [polkadot-sdk](http
 ## run develop chain
 [start develop](./docs/start-develop.md)
 
-## Visit the explorer
-[explorer](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/explorer)
+## Visit the [explorer](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/explorer)
 
 ![explorer](./docs/images/explorer.jpg)
 > This is a developer-friendly expolrer.
