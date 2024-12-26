@@ -101,16 +101,19 @@ docker-compose up
 2. When you send token to any address from MetaMask, you will find the transfer record on the [scan](http://localhost/).
     1. Send token by MetaMask
         ![transfer](./images/transfer.jpg)
-    2. transactions
+    2. transactions  
         ![transaction](./images/scan.jpg)
 
 > Note: Currently, Blockscout does not support displaying native transfer records, meaning transactions made through the `Balances` pallet are not shown here. (We plan to provide support for this in the future.)
 ## Deploy a smart contract to your network using Remix.
 
-1. Visit Remix
-    todo 
-2. Select a node
-    todo 
+1. Visit [Remix](https://remix.ethereum.org/#)
+   ![remix](./images/remix.jpg)
+    
+2. Select a network
+    ![select network for remix](./images/select%20network%20for%20remix.jpg)
 3. Compile and deploy the Lock smart contract
-    todo
-
+    1. Compoile
+        ![compile 2_Owner](./images/compile_owner.jpg)
+    2. deploy
+        ![deploy 2_Owner](./images/deploy.jpg)
