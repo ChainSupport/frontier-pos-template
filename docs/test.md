@@ -112,7 +112,7 @@ docker-compose up
     
 2. Select a network
     ![select network for remix](./images/select%20network%20for%20remix.jpg)
-3. Compile and deploy the Lock smart contract
+3. Compile and deploy the smart contract
     1. Compoile
         ![compile 2_Owner](./images/compile_owner.jpg)
     2. deploy
