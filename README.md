@@ -10,9 +10,6 @@ This is a general public chain development template based on [polkadot-sdk](http
 ![explorer](./docs/images/explorer.jpg)
 > This is a developer-friendly expolrer.
 
-## Develop and deploy your Solidity contract.
-[https://hardhat.org/tutorial](https://hardhat.org/tutorial)
-> This template's EVM contract development is 100% the same as Ethereum.
 
 ## Deploy your scan
 [https://github.com/blockscout/blockscout](https://github.com/blockscout/blockscout)
@@ -30,6 +27,17 @@ Currency symbol: UNIT
 
 
 > To make it easier for users and developers in the Ethereum community to connect to your network node or wallet, you should add your network on [https://chainlist.org/](https://chainlist.org/).
+
+## Develop and deploy your Solidity contract.
+- hardhat
+[https://hardhat.org/tutorial](https://hardhat.org/tutorial)
+
+- remix
+  [https://remix.ethereum.org/#](https://remix.ethereum.org/#)
+
+## More
+
+- [tutorial](./docs/test.md)
 
 ## License
 
