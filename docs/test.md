@@ -70,20 +70,31 @@ docker-compose up
     Chain ID: 42
     Currency symbol: UNIT
     ```
-    ![add network](./images/add_network_to_metamask.jpg)
+    <div align="center">
+    <img src="./images/add_network_to_metamask.jpg" alt="add_network_to_metamask">
+    </div>
+
+    <!-- ![add network](./images/add_network_to_metamask.jpg) -->
 
 2. Connect to your network and copy your wallet address.
     1. select network
-        ![before select](./images/before_select.jpg)
-        ![select network](./images/select%20network.jpg)
+    <div align="center">
+    <img src="./images/before_select.jpg" alt="before_select">
+    </div>
     2. copy your address
-        ![copy your address](./images/copy%20address.jpg)
+        <div align="center">
+        <img src="./images/copy%20address.jpg" alt="copy your address">
+        </div>
 
 3. Use `CHARLETH` to transfer UNIT to your wallet address in the [explorer](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/accounts). Your MetaMask wallet will display the balance.
     1. transfer 
-        ![charleth transfer](./images/charleth%20transfer.jpg)
+        <div align="center">
+        <img src="./images/charleth%20transfer.jpg" alt="charleth transfer">
+        </div>
     2. balance
-        ![balance](./images/balance.jpg)
+        <div align="center">
+        <img src="./images/balance.jpg" alt="balance">
+        </div>
 
 ## Run your scan (Blockscout)
 
@@ -100,9 +111,13 @@ docker-compose up
 
 2. When you send token to any address from MetaMask, you will find the transfer record on the [scan](http://localhost/).
     1. Send token by MetaMask
-        ![transfer](./images/transfer.jpg)
+        <div align="center">
+        <img src="./images/transfer.jpg" alt="transfer">
+        </div>
     2. transactions  
-        ![transaction](./images/scan.jpg)
+        <div align="center">
+        <img src="./images/scan.jpg" alt="transaction">
+        </div>
 
 > Note: Currently, Blockscout does not support displaying native transfer records, meaning transactions made through the `Balances` pallet are not shown here. (We plan to provide support for this in the future.)
 ## Deploy a smart contract to your network using Remix.
