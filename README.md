@@ -37,7 +37,7 @@ Currency symbol: UNIT
 
 ## More
 
-- [tutorial](./docs/test.md)
+- [tutorial](./docs/tutorial.md)
 
 ## License
 

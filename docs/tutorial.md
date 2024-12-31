@@ -16,6 +16,7 @@ cd frontier-pos-template
 [build local node](./build-node-local.md)
 ## run testnet node
 ```
+cargo build --release features testnet
 ./target/release/substrate --dev --alice
 ```
 
@@ -120,8 +121,9 @@ docker-compose up
         </div>
 
 > Note: Currently, Blockscout does not support displaying native transfer records, meaning transactions made through the `Balances` pallet are not shown here. (We plan to provide support for this in the future.)
-## Deploy a smart contract to your network using Remix.
+## Deploy a smart contract
 
+### Option 1: Remix
 1. Visit [Remix](https://remix.ethereum.org/#)
    ![remix](./images/remix.jpg)
     
@@ -132,3 +134,6 @@ docker-compose up
         ![compile 2_Owner](./images/compile_owner.jpg)
     2. deploy
         ![deploy 2_Owner](./images/deploy.jpg)
+
+### Option 2: hardhat
+[https://hardhat.org/tutorial](https://hardhat.org/tutorial)
