@@ -1,10 +1,10 @@
 # build stage: where we create binary
-FROM rust:1.74 AS builder
+FROM rust:1.80 AS builder
 
 RUN apt update && apt install -y make clang pkg-config libssl-dev protobuf-compiler build-essential git curl llvm make
-RUN rustup default stable && \
-    rustup component add rust-src && \
-    rustup target add wasm32-unknown-unknown
+# RUN rustup default stable && \
+#     rustup component add rust-src && \
+#     rustup target add wasm32-unknown-unknown
 
 WORKDIR /substrate
 COPY . /substrate
