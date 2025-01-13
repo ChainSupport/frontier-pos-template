@@ -75,6 +75,7 @@ impl SubstrateCli for Cli {
         #[cfg(feature = "mainnet")]
         let spec = match id {
             "" | "mainnet" => Box::new(chain_spec::mainnet::development_config()),
+            "local_mainnet" => Box::new(chain_spec::mainnet::development_config()),
             path => Box::new(chain_spec::mainnet::ChainSpec::from_json_file(
                 std::path::PathBuf::from(path),
             )?),
@@ -83,6 +84,7 @@ impl SubstrateCli for Cli {
         #[cfg(feature = "testnet")]
         let spec = match id {
             "dev" | "testnet" | "" => Box::new(chain_spec::testnet::development_config()),
+            "local_testnet" => Box::new(chain_spec::testnet::development_config()),
             path => Box::new(chain_spec::testnet::ChainSpec::from_json_file(
                 std::path::PathBuf::from(path),
             )?),

@@ -2,9 +2,6 @@
 FROM rust:1.80 AS builder
 
 RUN apt update && apt install -y make clang pkg-config libssl-dev protobuf-compiler build-essential git curl llvm make
-# RUN rustup default stable && \
-#     rustup component add rust-src && \
-#     rustup target add wasm32-unknown-unknown
 
 WORKDIR /substrate
 COPY . /substrate
@@ -21,9 +18,6 @@ COPY --from=builder /substrate/target/release/substrate /usr/local/bin
 COPY --from=builder /substrate/scripts/validator_node_init.sh /usr/local/bin
 COPY --from=builder /substrate/scripts/normal_node_init.sh /usr/local/bin
 
-ENV BASE_PATH=/data
-ENV SESSION_KEYS_PASSWORD=root
-ENV SESSION_KEYS_INDEX=0
 
 RUN useradd -m -u 1000 -U -s /bin/base -d /substrate substrate && \
 	mkdir -p ${BASE_PATH} /substrate/.local/share/substrate && \
