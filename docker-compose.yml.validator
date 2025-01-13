@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  init_validator_node:
+    image: chainsupport/substrate-testnet-node:latest
+    entrypoint: ["bash", "-c", "/usr/local/bin/validator_node_init.sh"]
+    environment:
+      - SESSION_KEYS_PASSWORD=root
+      - INDEX=0
+
+    volumes:
+      - ./db:/data
+
+  validator_node:
+    image: chainsupport/substrate-testnet-node:latest
+    entrypoint: ["/usr/local/bin/substrate", "--base-path", "/data", "--database", "auto"]
+    command: ["--validator", "--pruning", "archive", "--max-runtime-instances", "32"]
+
+    ports:
+      - 30333:30333
+      - 9944:9944
+      - 9933:9933
+    
+    volumes:
+      - ./db:/data
+    depends_on:
+      - init_validator_node
