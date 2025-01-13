@@ -16,19 +16,19 @@ LABEL description="Multistage Docker image for frontier-pos-template: a developm
 
 COPY --from=builder /substrate/target/release/substrate /usr/local/bin
 COPY --from=builder /substrate/scripts/validator_node_init.sh /usr/local/bin
-COPY --from=builder /substrate/scripts/normal_node_init.sh /usr/local/bin
+COPY --from=builder /substrate/scripts/full_node_init.sh /usr/local/bin
 
 
 RUN useradd -m -u 1000 -U -s /bin/base -d /substrate substrate && \
-	mkdir -p ${BASE_PATH} /substrate/.local/share/substrate && \
+	mkdir -p /data /substrate/.local/share/substrate && \
 	chown -R substrate:substrate /data && \
-	ln -s ${BASE_PATH} /substrate/.local/share/substrate && \
+	ln -s /data /substrate/.local/share/substrate && \
 # Sanity checks
 	ldd /usr/local/bin/substrate && \
 # # unclutter and minimize the attack surface
 # 	rm -rf /usr/bin /usr/sbin && \
     chmod 777 /usr/local/bin/validator_node_init.sh && \
-	chmod 777 /usr/local/bin/normal_node_init.sh && \
+	chmod 777 /usr/local/bin/full_node_init.sh && \
 	/usr/local/bin/substrate --version
 
 # RUN /usr/local/bin/substrate --version 
