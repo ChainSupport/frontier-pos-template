@@ -19,6 +19,7 @@
 //! The Substrate runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
 #![allow(unused_variables)]
+#![allow(dead_code)]
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limits.
 #![recursion_limit = "1024"]
@@ -93,7 +94,7 @@ use sp_consensus_beefy::{
 };
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
 use sp_core::{
-    crypto::{ByteArray, KeyTypeId},
+    crypto::KeyTypeId,
     OpaqueMetadata, H160, U256,
 };
 use sp_inherents::{CheckInherentsResult, InherentData};

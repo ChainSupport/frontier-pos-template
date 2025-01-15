@@ -47,3 +47,6 @@ node2/
 full_node/
 private/
 private*
+build_rs_cov.profraw
+tarpaulin-report.html
+*html

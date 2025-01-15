@@ -203,11 +203,11 @@ where
         .into_rpc(),
     )?;
 
-    #[cfg(feature = "txpool")]
-    io.merge(TxPool::new(client, graph).into_rpc())?;
+    // #[cfg(feature = "txpool")]
+    // io.merge(TxPool::new(client, graph).into_rpc())?;
 
-    #[cfg(feature = "txpool")]
-    use fc_rpc::{TxPool, TxPoolApiServer};
+    // #[cfg(feature = "txpool")]
+    // use fc_rpc::{TxPool, TxPoolApiServer};
 
     Ok(io)
 }

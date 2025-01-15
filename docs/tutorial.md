@@ -16,33 +16,25 @@ cd frontier-pos-template
 [build local node](./build-node-local.md)
 ## run testnet node
 ```
-cargo build --release features testnet
+cargo build --release --features testnet
 ./target/release/substrate --dev --alice
 ```
 
 ## Unit tests
 
 ```
- cargo test -p babe-consensus-data-provider -- --nocapture
-```
-
-```
+cargo test -p babe-consensus-data-provider -- --nocapture
 cargo test -p ecdsa-keyring -- --nocapture
 ```
 
-```
-cargo test --features testnet -- --nocapture
-
-```
-
-```
-cargo test --features mainnet -- --nocapture
-
-```
-
 ## Generate test coverage report
+
 ```
-cargo tarpaulin --out html --run-types Tests
+cargo tarpaulin --out html --run-types Tests -p babe-consensus-data-provider
+```
+
+```
+cargo tarpaulin --out html --run-types Tests -p ecdsa-keyring
 ```
 ## docker build
 
