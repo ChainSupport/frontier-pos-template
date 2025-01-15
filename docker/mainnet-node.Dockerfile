@@ -32,6 +32,7 @@ RUN useradd -m -u 1000 -U -s /bin/base -d /substrate substrate && \
 # 	rm -rf /usr/bin /usr/sbin && \
     chmod 777 /usr/local/bin/validator_node_init.sh && \
 	chmod 777 /usr/local/bin/full_node_init.sh && \
+	chmod 777 /data && \
 	/usr/local/bin/substrate --version
 
 # RUN /usr/local/bin/substrate --version 

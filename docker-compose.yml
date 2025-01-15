@@ -4,6 +4,7 @@ services:
 
   init_alice:
     image: chainsupport/substrate-testnet-node:latest
+    user: root
     entrypoint: ["/usr/local/bin/substrate"]
     command: ["key", "generate-node-key", "--base-path", "/data"]
     volumes:
@@ -11,6 +12,7 @@ services:
   
   init_bob:
     image: chainsupport/substrate-testnet-node:latest
+    user: root
     entrypoint: ["/usr/local/bin/substrate"]
     command: ["key", "generate-node-key", "--base-path", "/data"]
     volumes:
@@ -18,6 +20,7 @@ services:
 
   alice:
     image: chainsupport/substrate-testnet-node:latest
+    user: root
     command: ["--pruning", "archive", "--alice", "--rpc-max-connections", "100", "--rpc-cors", "all", "--rpc-methods", "Unsafe", "--unsafe-rpc-external"]
     volumes:
       - ./db/alice:/data 
@@ -34,6 +37,7 @@ services:
 
   bob:
     image: chainsupport/substrate-testnet-node:latest
+    user: root
     command: ["--pruning", "archive", "--bob", "--rpc-max-connections", "100", "--rpc-cors", "all", "--rpc-methods", "Unsafe", "--unsafe-rpc-external"]
     volumes:
       - ./db/bob:/data 
