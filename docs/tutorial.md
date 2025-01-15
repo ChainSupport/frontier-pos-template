@@ -30,10 +30,12 @@ cargo test -p ecdsa-keyring -- --nocapture
 ## Generate test coverage report
 
 ```
+cargo clean
 cargo tarpaulin --out html --run-types Tests -p babe-consensus-data-provider
 ```
 
 ```
+cargo clean
 cargo tarpaulin --out html --run-types Tests -p ecdsa-keyring
 ```
 ## docker build
