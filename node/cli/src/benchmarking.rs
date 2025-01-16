@@ -21,6 +21,7 @@
 //! Should only be used for benchmarking as it may break in other contexts.
 
 #![allow(dead_code)]
+#![allow(clippy::clone_on_copy)]
 #![allow(unused_variables)]
 #![cfg(any(feature = "testnet", feature = "mainnet"))]
 

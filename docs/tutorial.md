@@ -38,6 +38,14 @@ cargo tarpaulin --out html --run-types Tests -p babe-consensus-data-provider
 cargo clean
 cargo tarpaulin --out html --run-types Tests -p ecdsa-keyring
 ```
+
+## Cargo clippy
+
+```
+cargo clippy --features testnet
+cargo clippy --features mainnet
+```
+
 ## docker build
 
 [build node docker](./build-node-docker.md)
