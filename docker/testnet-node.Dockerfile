@@ -22,7 +22,7 @@ COPY --from=builder /substrate/scripts/validator_node_init.sh /usr/local/bin
 COPY --from=builder /substrate/scripts/full_node_init.sh /usr/local/bin
 
 
-RUN useradd -m -u 1000 -U -s /bin/base -d /substrate substrate && \
+RUN useradd -m -u 1000 -U -s /bin/bash -d /substrate substrate && \
 	mkdir -p /data /substrate/.local/share/substrate && \
 	chown -R substrate:substrate /data && \
 	ln -s /data /substrate/.local/share/substrate && \
